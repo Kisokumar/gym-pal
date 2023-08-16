@@ -1,4 +1,4 @@
-import { Exercise } from "./entities/Exercise";
+import { WorkoutSession } from "./entities/WorkoutSession";
 import { MikroORM } from "@mikro-orm/postgresql";
 import { __prod__ } from "./constants";
 import { config } from "dotenv";
@@ -10,7 +10,7 @@ export default {
     path: "dist/migrations",
     pathTs: "src/migrations",
   },
-  entities: [Exercise],
+  entities: [WorkoutSession],
   allowGlobalContext: true,
   dbName: process.env.DB_NAME,
   user: process.env.DB_USER,

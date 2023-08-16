@@ -3,7 +3,7 @@ import { Field, ObjectType } from "type-graphql";
 
 @ObjectType()
 @Entity()
-export class Exercise {
+export class WorkoutSession {
   @Field()
   @PrimaryKey()
   id!: number;
@@ -18,16 +18,5 @@ export class Exercise {
 
   @Field()
   @Property({ type: "text" })
-  exerciseName!: string;
-
-  @Field()
-  weight!: number;
-
-  @Field()
-  @Property()
-  reps!: number;
-
-  @Field()
-  @Property()
-  sets!: number;
+  sessionType!: string;
 }

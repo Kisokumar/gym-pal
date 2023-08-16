@@ -35,39 +35,21 @@
           "length": 6,
           "mappedType": "datetime"
         },
-        "exercise_name": {
-          "name": "exercise_name",
+        "session_type": {
+          "name": "session_type",
           "type": "text",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
           "mappedType": "text"
-        },
-        "reps": {
-          "name": "reps",
-          "type": "int",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "mappedType": "integer"
-        },
-        "sets": {
-          "name": "sets",
-          "type": "int",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "mappedType": "integer"
         }
       },
-      "name": "exercise",
+      "name": "workout_session",
       "schema": "public",
       "indexes": [
         {
-          "keyName": "exercise_pkey",
+          "keyName": "workout_session_pkey",
           "columnNames": [
             "id"
           ],

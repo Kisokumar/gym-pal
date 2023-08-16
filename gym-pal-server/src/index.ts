@@ -6,17 +6,40 @@ import "reflect-metadata";
 import { ApolloServer } from "apollo-server-express";
 import { buildSchema } from "type-graphql";
 import { HelloResolver } from "./resolvers/hello";
-import { ExerciseResolver } from "./resolvers/exercise";
+import { WorkoutSessionResolver } from "./resolvers/workoutSession";
+// import { WorkoutSession } from "./entities/WorkoutSession";
+// import { EntityManager } from "@mikro-orm/postgresql";
 
 const main = async () => {
   const orm = await MikroORM.init(mikroOrmConfig);
   await orm.getMigrator().up();
 
+  // const entityManager = orm.em as EntityManager;
+  // await entityManager.nativeDelete(WorkoutSession, {});
+  // let temp = orm.em.create(WorkoutSession, {
+  //   createdAt: new Date(),
+  //   updatedAt: new Date(),
+  //   sessionType: "Push",
+  // });
+  // await orm.em.persistAndFlush(temp);
+  // temp = orm.em.create(WorkoutSession, {
+  //   createdAt: new Date(),
+  //   updatedAt: new Date(),
+  //   sessionType: "Pull",
+  // });
+  // await orm.em.persistAndFlush(temp);
+  // temp = orm.em.create(WorkoutSession, {
+  //   createdAt: new Date(),
+  //   updatedAt: new Date(),
+  //   sessionType: "Legs",
+  // });
+  // await orm.em.persistAndFlush(temp);
+
   const app = express();
 
   const apolloServer = new ApolloServer({
     schema: await buildSchema({
-      resolvers: [HelloResolver, ExerciseResolver],
+      resolvers: [HelloResolver, WorkoutSessionResolver],
       validate: false,
     }),
     context: () => ({ em: orm.em }),
