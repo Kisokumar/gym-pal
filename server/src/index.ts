@@ -8,6 +8,7 @@ import { UserResolver } from "./resolvers/user";
 import { WorkoutSessionResolver } from "./resolvers/workoutSession";
 import { __prod__ } from "./constants";
 import { buildSchema } from "type-graphql";
+import cors from "cors";
 import { createClient } from "redis";
 import express from "express";
 import mikroOrmConfig from "./mikro-orm.config";
@@ -26,6 +27,13 @@ const main = async () => {
     client: redisClient,
     disableTouch: true,
   });
+
+  app.use(
+    cors({
+      origin: "http://localhost:3000",
+      credentials: true,
+    })
+  );
 
   const oneWeek = 1000 * 60 * 60 * 24 * 7;
 
@@ -54,7 +62,10 @@ const main = async () => {
   });
 
   await apolloServer.start();
-  apolloServer.applyMiddleware({ app });
+  apolloServer.applyMiddleware({
+    app,
+    cors: false,
+  });
 
   app.listen(4000, () => {
     console.log("Server started on localhost:4000");
