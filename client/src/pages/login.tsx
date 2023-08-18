@@ -5,13 +5,11 @@ import InputField from "../components/InputField";
 import React from "react";
 import Wrapper from "../components/Wrapper";
 import { toErrorMap } from "../utils/toErrorMap";
-import { useRegisterMutation } from "../generated/graphql";
+import { useLoginMutation } from "../generated/graphql";
 import { useRouter } from "next/router";
 
-interface RegisterProps {}
-
-export default function Register(props: RegisterProps) {
-  const [_, register] = useRegisterMutation();
+export default function Login() {
+  const [_result, login] = useLoginMutation();
   const router = useRouter();
 
   return (
@@ -19,13 +17,13 @@ export default function Register(props: RegisterProps) {
       <Formik
         initialValues={{ username: "", password: "" }}
         onSubmit={async (values, { setErrors }) => {
-          const response = await register({ options: values });
-          const errors = response.data?.register.errors;
-          const user = response.data?.register.user;
+          const response = await login({ options: values });
+          const errors = response.data?.login.errors;
+          const user = response.data?.login.user;
           if (errors) {
             setErrors(toErrorMap(errors));
           } else if (user) {
-            router.replace("/");
+            router.push("/");
           }
         }}
       >
@@ -36,7 +34,7 @@ export default function Register(props: RegisterProps) {
               <InputField type="password" name="password" label="Password" />
             </Box>
             <Button mt={4} type="submit" isLoading={isSubmitting}>
-              Register
+              Log In
             </Button>
           </Form>
         )}

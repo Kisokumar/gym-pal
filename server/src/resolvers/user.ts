@@ -1,6 +1,7 @@
 import { User } from "../entities/User";
 import { MyContext } from "../types";
 import argon2 from "argon2";
+import { EntityManager } from "@mikro-orm/postgresql";
 import {
   Arg,
   Ctx,
@@ -52,31 +53,40 @@ export class UserResolver {
   @Mutation(() => UserResponse)
   async register(
     @Arg("options") options: UsernamePasswordInput,
-    @Ctx() { em }: MyContext
+    @Ctx() { em, req }: MyContext
   ): Promise<UserResponse> {
     if (options.username.length <= 2) {
       return {
         errors: [
-          { field: "username", message: "length must be greater than 2 chars" },
+          { field: "username", message: "Username greater than 2 characters." },
         ],
       };
     }
     if (options.password.length <= 4) {
       return {
         errors: [
-          { field: "password", message: "length must be greater than 4 chars" },
+          {
+            field: "password",
+            message: "Password must be greater than 4 characters.",
+          },
         ],
       };
     }
     const hashedPassword = await argon2.hash(options.password);
-    const user = em.create(User, {
-      createdAt: new Date(),
-      password: hashedPassword,
-      updatedAt: new Date(),
-      username: options.username,
-    });
+
+    let user;
     try {
-      await em.persistAndFlush(user);
+      const result = await (em as EntityManager)
+        .createQueryBuilder(User)
+        .getKnexQuery()
+        .insert({
+          created_at: new Date(),
+          password: hashedPassword,
+          updated_at: new Date(),
+          username: options.username,
+        })
+        .returning("*");
+      user = result[0];
     } catch (err) {
       if (err.code === "23505") {
         return {
@@ -88,8 +98,9 @@ export class UserResolver {
           ],
         };
       }
-      console.log("message: ", err);
     }
+
+    req.session.userId = user.id;
     return { user };
   }
 
@@ -106,7 +117,7 @@ export class UserResolver {
         errors: [
           {
             field: "username",
-            message: "username doesn't exist",
+            message: "User not found. Sign up to get started.",
           },
         ],
       };
@@ -117,7 +128,7 @@ export class UserResolver {
         errors: [
           {
             field: "password",
-            message: "password is incorrect",
+            message: "Invalid password. Please try again.",
           },
         ],
       };

@@ -2,6 +2,7 @@ import { Client, Provider, cacheExchange, fetchExchange } from "urql";
 
 import { AppProps } from "next/app";
 import { ChakraProvider } from "@chakra-ui/react";
+import NavBar from "../components/NavBar";
 import theme from "../theme";
 
 const client = new Client({
@@ -16,6 +17,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <Provider value={client}>
       <ChakraProvider theme={theme}>
+        <NavBar />
         <Component {...pageProps} />
       </ChakraProvider>
     </Provider>

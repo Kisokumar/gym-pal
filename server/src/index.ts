@@ -18,6 +18,12 @@ const main = async () => {
   const orm = await MikroORM.init(mikroOrmConfig);
   await orm.getMigrator().up();
 
+  // quickly delete all users and sessions
+  // const userRepository = orm.em.getRepository(User);
+  // await userRepository.nativeDelete({});
+  // const sessionRepo = orm.em.getRepository(WorkoutSession);
+  // await sessionRepo.nativeDelete({});
+
   const app = express();
 
   const redisClient = createClient();
