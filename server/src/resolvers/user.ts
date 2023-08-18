@@ -21,6 +21,16 @@ class UsernamePasswordInput {
   password: string;
 }
 
+@InputType()
+class UsernamePasswordRegisterInput {
+  @Field()
+  username: string;
+  @Field()
+  password: string;
+  @Field()
+  privateAccount: boolean;
+}
+
 @ObjectType()
 class FieldError {
   @Field()
@@ -52,7 +62,7 @@ export class UserResolver {
 
   @Mutation(() => UserResponse)
   async register(
-    @Arg("options") options: UsernamePasswordInput,
+    @Arg("options") options: UsernamePasswordRegisterInput,
     @Ctx() { em, req }: MyContext
   ): Promise<UserResponse> {
     if (options.username.length <= 2) {
@@ -76,31 +86,42 @@ export class UserResolver {
 
     let user;
     try {
-      const result = await (em as EntityManager)
-        .createQueryBuilder(User)
-        .getKnexQuery()
-        .insert({
-          created_at: new Date(),
-          password: hashedPassword,
-          updated_at: new Date(),
-          username: options.username,
-        })
-        .returning("*");
-      user = result[0];
+      const result = em.create(User, {
+        username: options.username,
+        password: hashedPassword,
+        privateAccount: options.privateAccount,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      });
+      await em.persistAndFlush(result);
+
+      // const result = await (em as EntityManager)
+      //   .createQueryBuilder(User)
+      //   .getKnexQuery()
+      //   .insert({
+      //     created_at: new Date(),
+      //     password: hashedPassword,
+      //     updated_at: new Date(),
+      //     privateAccount: options.privateAccount,
+      //     username: options.username,
+      //   })
+      //   .returning("*");
+
+      user = result;
+      req.session.userId = user.id;
     } catch (err) {
       if (err.code === "23505") {
         return {
           errors: [
             {
               field: "username",
-              message: "username is already taken",
+              message: "Username is already taken!",
             },
           ],
         };
       }
     }
 
-    req.session.userId = user.id;
     return { user };
   }
 
@@ -152,5 +173,40 @@ export class UserResolver {
         resolve(true);
       })
     );
+  }
+
+  @Mutation(() => UserResponse)
+  async changePrivacy(
+    @Arg("isPrivate") isPrivate: boolean,
+    @Ctx() { em, req }: MyContext
+  ): Promise<UserResponse> {
+    if (!req.session.userId) {
+      return {
+        errors: [
+          {
+            field: "user",
+            message: "User not authenticated.",
+          },
+        ],
+      };
+    }
+
+    const user = await em.findOne(User, { id: req.session.userId });
+
+    if (!user) {
+      return {
+        errors: [
+          {
+            field: "user",
+            message: "User not found.",
+          },
+        ],
+      };
+    }
+
+    user.privateAccount = isPrivate;
+    await em.persistAndFlush(user);
+
+    return { user };
   }
 }

@@ -17,30 +17,32 @@ const breakpoints = {
 };
 
 const theme = extendTheme({
-  semanticTokens: {
-    colors: {
+  colors: {
+    brand: {
       text: {
         default: "#16161D",
         _dark: "#ade3b8",
       },
-      heroGradientStart: {
-        default: "#7928CA",
-        _dark: "#e3a7f9",
-      },
-      heroGradientEnd: {
-        default: "#FF0080",
-        _dark: "#fbec8f",
-      },
     },
-    radii: {
-      button: "12px",
-    },
-  },
-  colors: {
     black: "#16161D",
+  },
+  radii: {
+    button: "12px",
   },
   fonts,
   breakpoints,
+  config: {
+    initialColorMode: "dark",
+    useSystemColorMode: true,
+  },
+  // todo: fix styling, disabling light mode for now
+  styles: {
+    global: ({ colorMode }: { colorMode: "light" | "dark" }) => ({
+      body: {
+        bg: colorMode === "light" ? "gray.300" : "#1a202c",
+      },
+    }),
+  },
 });
 
 export default theme;

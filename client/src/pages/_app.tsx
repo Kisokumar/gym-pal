@@ -1,3 +1,4 @@
+import { Box, ChakraProvider, Flex } from "@chakra-ui/react";
 import { Cache, QueryInput, cacheExchange } from "@urql/exchange-graphcache";
 import { Client, Provider, fetchExchange } from "urql";
 import {
@@ -9,7 +10,6 @@ import {
 } from "../generated/graphql";
 
 import { AppProps } from "next/app";
-import { ChakraProvider } from "@chakra-ui/react";
 import NavBar from "../components/NavBar";
 import theme from "../theme";
 
@@ -88,8 +88,10 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <Provider value={client}>
       <ChakraProvider theme={theme}>
-        <NavBar />
-        <Component {...pageProps} />
+        <Flex h="100vh" direction="column">
+          <NavBar />
+          <Component {...pageProps} />
+        </Flex>
       </ChakraProvider>
     </Provider>
   );

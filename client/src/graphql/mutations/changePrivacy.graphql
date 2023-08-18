@@ -1,0 +1,11 @@
+mutation ChangePrivacy($isPrivate: Boolean!) {
+  changePrivacy(isPrivate: $isPrivate) {
+    errors {
+      field
+      message
+    }
+    user {
+      ...RegularUser
+    }
+  }
+}

@@ -1,6 +1,8 @@
 import { Box, Button, Link, useColorMode } from "@chakra-ui/react";
 import { useLogoutMutation, useMeQuery } from "../generated/graphql";
 
+import { BsGlobeAmericas } from "react-icons/bs";
+import { CiLock } from "react-icons/ci";
 import { DarkModeSwitch } from "./DarkModeSwitch";
 import React from "react";
 import { Text } from "@chakra-ui/react";
@@ -12,7 +14,7 @@ export default function NavBar(props: NavBarProps) {
   const { colorMode } = useColorMode();
   const router = useRouter();
 
-  const isRegisterPage = router.pathname === "/register";
+  const isRegisterPage = router.pathname === "/signup";
   const isLoginPage = router.pathname === "/login";
 
   const [{ fetching: logoutFetching }, logout] = useLogoutMutation();
@@ -20,22 +22,24 @@ export default function NavBar(props: NavBarProps) {
 
   return (
     <Box
-      bg={colorMode === "light" ? "gray.200" : "gray.900"}
+      bg={colorMode === "light" ? "gray.600" : "gray.900"}
       h={14}
       display="flex"
       alignItems="center"
       justifyContent={"space-between"}
     >
       <Box ml={4} gap={2} display={"flex"}>
-        <Text fontSize="xl">Gym Pal</Text>
+        <Text fontSize="xl" color="white">
+          GymPal
+        </Text>
       </Box>
       <Box mr={4} gap={2} display={"flex"}>
         {fetching || !data?.me ? (
           <>
             {!isRegisterPage && (
-              <Link href="/register">
+              <Link href="/signup">
                 <Button fontSize={"sm"} size={"sm"}>
-                  Register
+                  Sign Up
                 </Button>
               </Link>
             )}
@@ -48,7 +52,8 @@ export default function NavBar(props: NavBarProps) {
             )}
           </>
         ) : (
-          <Box gap={2} display={"flex"}>
+          <Box gap={2} display={"flex"} alignItems="center">
+            {data?.me?.privateAccount ? <CiLock /> : <BsGlobeAmericas />}
             <Text fontSize="xl">Hey {data?.me?.username}!</Text>
             <Button
               fontSize={"sm"}
@@ -56,6 +61,7 @@ export default function NavBar(props: NavBarProps) {
               isLoading={logoutFetching}
               onClick={() => {
                 logout({});
+                router.push("/");
               }}
             >
               Log Out
