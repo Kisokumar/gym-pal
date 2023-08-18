@@ -1,0 +1,8 @@
+query WorkoutSessions {
+  WorkoutSessions {
+    id
+    createdAt
+    updatedAt
+    sessionType
+  }
+}

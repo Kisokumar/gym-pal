@@ -5,11 +5,13 @@ import InputField from "../components/InputField";
 import React from "react";
 import { Text } from "@chakra-ui/react";
 import Wrapper from "../components/Wrapper";
+import { createUrqlClient } from "../utils/createUrqlClient";
 import { toErrorMap } from "../utils/toErrorMap";
 import { useLoginMutation } from "../generated/graphql";
 import { useRouter } from "next/router";
+import { withUrqlClient } from "next-urql";
 
-export default function Login() {
+function Login() {
   const [, login] = useLoginMutation();
   const { colorMode } = useColorMode();
   const router = useRouter();
@@ -59,3 +61,4 @@ export default function Login() {
     </Box>
   );
 }
+export default withUrqlClient(createUrqlClient, { ssr: true })(Login);

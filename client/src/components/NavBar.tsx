@@ -6,9 +6,12 @@ import { CiLock } from "react-icons/ci";
 import { DarkModeSwitch } from "./DarkModeSwitch";
 import React from "react";
 import { Text } from "@chakra-ui/react";
+import { createUrqlClient } from "../utils/createUrqlClient";
+import { isServer } from "../utils/isServer";
 import { useRouter } from "next/router";
+import { withUrqlClient } from "next-urql";
 
-export default function NavBar() {
+function NavBar() {
   const { colorMode } = useColorMode();
   const router = useRouter();
 
@@ -16,7 +19,7 @@ export default function NavBar() {
   const isLoginPage = router.pathname === "/login";
 
   const [{ fetching: logoutFetching }, logout] = useLogoutMutation();
-  const [{ data, fetching }] = useMeQuery();
+  const [{ data, fetching }] = useMeQuery({ pause: isServer() });
 
   return (
     <Box
@@ -65,7 +68,7 @@ export default function NavBar() {
               isLoading={logoutFetching}
               onClick={() => {
                 logout({});
-                router.push("/");
+                router.push("/login");
               }}
             >
               Log Out
@@ -77,3 +80,5 @@ export default function NavBar() {
     </Box>
   );
 }
+
+export default withUrqlClient(createUrqlClient)(NavBar);
