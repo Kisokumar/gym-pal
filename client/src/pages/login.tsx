@@ -1,7 +1,6 @@
 import { Box, Button, Link, useColorMode } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
 
-import { FiExternalLink } from "react-icons/fi";
 import InputField from "../components/InputField";
 import React from "react";
 import { Text } from "@chakra-ui/react";
@@ -11,7 +10,7 @@ import { useLoginMutation } from "../generated/graphql";
 import { useRouter } from "next/router";
 
 export default function Login() {
-  const [_result, login] = useLoginMutation();
+  const [, login] = useLoginMutation();
   const { colorMode } = useColorMode();
   const router = useRouter();
 

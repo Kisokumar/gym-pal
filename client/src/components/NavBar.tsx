@@ -8,9 +8,7 @@ import React from "react";
 import { Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 
-interface NavBarProps {}
-
-export default function NavBar(props: NavBarProps) {
+export default function NavBar() {
   const { colorMode } = useColorMode();
   const router = useRouter();
 

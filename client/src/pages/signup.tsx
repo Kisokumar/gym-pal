@@ -10,7 +10,7 @@ import { useRegisterMutation } from "../generated/graphql";
 import { useRouter } from "next/router";
 
 export default function SignUp() {
-  const [_, register] = useRegisterMutation();
+  const [, register] = useRegisterMutation();
   const { colorMode } = useColorMode();
   const router = useRouter();
 
@@ -25,7 +25,6 @@ export default function SignUp() {
             });
             const errors = response.data?.register.errors;
             const user = response.data?.register.user;
-            console.log(response);
             if (errors) {
               setErrors(toErrorMap(errors));
             } else if (user) {

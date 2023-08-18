@@ -1,5 +1,8 @@
-import { Box, ChakraProvider, Flex } from "@chakra-ui/react";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any  */
+
 import { Cache, QueryInput, cacheExchange } from "@urql/exchange-graphcache";
+import { ChakraProvider, Flex } from "@chakra-ui/react";
 import { Client, Provider, fetchExchange } from "urql";
 import {
   LoginMutation,

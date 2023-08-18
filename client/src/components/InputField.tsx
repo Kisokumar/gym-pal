@@ -12,6 +12,7 @@ type InputFieldProps = InputHTMLAttributes<HTMLInputElement> & {
 export default function InputField({
   label,
   placeholder,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   size: _,
   ...props
 }: InputFieldProps) {
