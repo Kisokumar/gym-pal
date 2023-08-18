@@ -47,7 +47,7 @@ const main = async () => {
         secure: false,
         sameSite: "lax",
       },
-      secret: "dqoiwjdosaijd",
+      secret: process.env.COOKIE_SEVRET || "dqoiwjdosaijd",
       resave: false,
       saveUninitialized: true,
     })
