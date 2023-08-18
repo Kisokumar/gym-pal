@@ -1,13 +1,17 @@
-import { MikroORM } from "@mikro-orm/core";
-import { __prod__ } from "./constants";
-import mikroOrmConfig from "./mikro-orm.config";
-import express from "express";
 import "reflect-metadata";
+
 import { ApolloServer } from "apollo-server-express";
-import { buildSchema } from "type-graphql";
 import { HelloResolver } from "./resolvers/hello";
-import { WorkoutSessionResolver } from "./resolvers/workoutSession";
+import { MikroORM } from "@mikro-orm/core";
+import RedisStore from "connect-redis";
 import { UserResolver } from "./resolvers/user";
+import { WorkoutSessionResolver } from "./resolvers/workoutSession";
+import { __prod__ } from "./constants";
+import { buildSchema } from "type-graphql";
+import { createClient } from "redis";
+import express from "express";
+import mikroOrmConfig from "./mikro-orm.config";
+import session from "express-session";
 
 const main = async () => {
   const orm = await MikroORM.init(mikroOrmConfig);
@@ -15,12 +19,38 @@ const main = async () => {
 
   const app = express();
 
+  const redisClient = createClient();
+  redisClient.connect().catch(console.error);
+
+  const redisStore = new RedisStore({
+    client: redisClient,
+    disableTouch: true,
+  });
+
+  const oneWeek = 1000 * 60 * 60 * 24 * 7;
+
+  app.use(
+    session({
+      name: "qid",
+      store: redisStore,
+      cookie: {
+        maxAge: oneWeek,
+        httpOnly: true,
+        secure: false,
+        sameSite: "lax",
+      },
+      secret: "dqoiwjdosaijd",
+      resave: false,
+      saveUninitialized: true,
+    })
+  );
+
   const apolloServer = new ApolloServer({
     schema: await buildSchema({
       resolvers: [HelloResolver, WorkoutSessionResolver, UserResolver],
       validate: false,
     }),
-    context: () => ({ em: orm.em }),
+    context: ({ req, res }) => ({ em: orm.em, req, res }),
   });
 
   await apolloServer.start();
