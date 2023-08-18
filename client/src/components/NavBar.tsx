@@ -1,9 +1,9 @@
 import { Box, Button, Link, useColorMode } from "@chakra-ui/react";
-import React, { useEffect } from "react";
+import { useLogoutMutation, useMeQuery } from "../generated/graphql";
 
 import { DarkModeSwitch } from "./DarkModeSwitch";
+import React from "react";
 import { Text } from "@chakra-ui/react";
-import { useMeQuery } from "../generated/graphql";
 import { useRouter } from "next/router";
 
 interface NavBarProps {}
@@ -15,11 +15,8 @@ export default function NavBar(props: NavBarProps) {
   const isRegisterPage = router.pathname === "/register";
   const isLoginPage = router.pathname === "/login";
 
-  const [{ data, fetching }, refetchMeQuery] = useMeQuery();
-
-  useEffect(() => {
-    refetchMeQuery();
-  }, []);
+  const [{ fetching: logoutFetching }, logout] = useLogoutMutation();
+  const [{ data, fetching }] = useMeQuery();
 
   return (
     <Box
@@ -53,7 +50,14 @@ export default function NavBar(props: NavBarProps) {
         ) : (
           <Box gap={2} display={"flex"}>
             <Text fontSize="xl">Hey {data?.me?.username}!</Text>
-            <Button fontSize={"sm"} size={"sm"}>
+            <Button
+              fontSize={"sm"}
+              size={"sm"}
+              isLoading={logoutFetching}
+              onClick={() => {
+                logout({});
+              }}
+            >
               Log Out
             </Button>
           </Box>
