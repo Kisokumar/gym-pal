@@ -53,8 +53,14 @@ export default function NavBar(props: NavBarProps) {
           </>
         ) : (
           <Box gap={2} display={"flex"} alignItems="center">
-            {data?.me?.privateAccount ? <CiLock /> : <BsGlobeAmericas />}
-            <Text fontSize="xl">Hey {data?.me?.username}!</Text>
+            {data?.me?.privateAccount ? (
+              <CiLock color="white" />
+            ) : (
+              <BsGlobeAmericas color="white" />
+            )}
+            <Text fontSize="xl" color="white">
+              Hey {data?.me?.username}!
+            </Text>
             <Button
               fontSize={"sm"}
               size={"sm"}
