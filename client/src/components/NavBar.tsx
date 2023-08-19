@@ -26,8 +26,38 @@ function NavBar() {
   const { colorMode } = useColorMode();
   const router = useRouter();
 
-  const isRegisterPage = router.pathname === "/signup";
-  const isLoginPage = router.pathname === "/login";
+  const loginButton = (
+    <Link href="/login" key="login">
+      <Button fontSize="sm" size="sm">
+        Log In
+      </Button>
+    </Link>
+  );
+  const signUpButton = (
+    <Link href="/signup" key="signup">
+      <Button fontSize="sm" size="sm">
+        Sign Up
+      </Button>
+    </Link>
+  );
+
+  const navButtons = (() => {
+    switch (router.pathname) {
+      case "/signup":
+        return loginButton;
+      case "/login":
+        return signUpButton;
+      case "/":
+        return null;
+      default:
+        return (
+          <>
+            {signUpButton}
+            {loginButton}
+          </>
+        );
+    }
+  })();
 
   const [{ fetching: logoutFetching }, logout] = useLogoutMutation();
   const [{ data, fetching }] = useMeQuery();
@@ -79,22 +109,7 @@ function NavBar() {
       </Box>
       <Box mr={4} gap={2} display="flex" alignItems="center">
         {fetching || !data?.me ? (
-          <>
-            {!isRegisterPage && (
-              <Link href="/signup">
-                <Button fontSize="sm" size="sm">
-                  Sign Up
-                </Button>
-              </Link>
-            )}
-            {!isLoginPage && (
-              <Link href="/login">
-                <Button fontSize="sm" size="sm">
-                  Log In
-                </Button>
-              </Link>
-            )}
-          </>
+          <>{navButtons}</>
         ) : (
           <Box gap={2} display="flex" alignItems="center">
             <Box display={["none", "none", "block"]}>

@@ -1,6 +1,6 @@
 import { useMeQuery, useWorkoutSessionsQuery } from "../generated/graphql";
 
-import LoggedOutPage from "../components/LoggedOutPage";
+import WelcomePage from "../components/WelcomePage";
 import { createUrqlClient } from "../utils/createUrqlClient";
 import { withUrqlClient } from "next-urql";
 
@@ -11,7 +11,7 @@ const Index = () => {
   const me = meData?.me;
 
   if (!me) {
-    return <LoggedOutPage pageProps={undefined} />;
+    return <WelcomePage pageProps={undefined} />;
   }
 
   return (
