@@ -32,14 +32,19 @@ function Login() {
             }
           }}
         >
-          {({ isSubmitting }) => (
+          {({ values, isSubmitting }) => (
             <Form>
               <InputField name="username" label="Username" />
               <Box mt={4}>
                 <InputField type="password" name="password" label="Password" />
               </Box>
               <Box mt={2} display="flex">
-                <Button type="submit" isLoading={isSubmitting} flex={1}>
+                <Button
+                  type="submit"
+                  isLoading={isSubmitting}
+                  flex={1}
+                  isDisabled={!values.password || !values.username}
+                >
                   Log In
                 </Button>
               </Box>

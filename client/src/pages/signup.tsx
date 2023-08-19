@@ -51,7 +51,11 @@ function SignUp() {
                 >
                   Private Account
                 </Checkbox>
-                <Button type="submit" isLoading={isSubmitting}>
+                <Button
+                  type="submit"
+                  isLoading={isSubmitting}
+                  isDisabled={!values.password || !values.username}
+                >
                   Sign Up
                 </Button>
                 <Box display="flex">

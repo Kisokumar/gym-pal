@@ -1,3 +1,4 @@
+import validatePassword from "../utils/validatePassword";
 import { User } from "../entities/User";
 import { MyContext } from "../types";
 import argon2 from "argon2";
@@ -11,6 +12,7 @@ import {
   Query,
   Resolver,
 } from "type-graphql";
+import { __prod__ } from "../constants";
 
 @InputType()
 class UsernamePasswordInput {
@@ -67,20 +69,19 @@ export class UserResolver {
     if (options.username.length <= 2) {
       return {
         errors: [
-          { field: "username", message: "Username greater than 2 characters." },
-        ],
-      };
-    }
-    if (options.password.length <= 4) {
-      return {
-        errors: [
           {
-            field: "password",
-            message: "Password must be greater than 4 characters.",
+            field: "username",
+            message: "Username must be greater than 2 characters.",
           },
         ],
       };
     }
+
+    if (__prod__) {
+      const passwordErrors = validatePassword(options.password);
+      if (passwordErrors) return passwordErrors;
+    }
+
     const hashedPassword = await argon2.hash(options.password);
 
     let user;
@@ -93,18 +94,6 @@ export class UserResolver {
         updatedAt: new Date(),
       });
       await em.persistAndFlush(result);
-
-      // const result = await (em as EntityManager)
-      //   .createQueryBuilder(User)
-      //   .getKnexQuery()
-      //   .insert({
-      //     created_at: new Date(),
-      //     password: hashedPassword,
-      //     updated_at: new Date(),
-      //     privateAccount: options.privateAccount,
-      //     username: options.username,
-      //   })
-      //   .returning("*");
 
       user = result;
       req.session.userId = user.id;
