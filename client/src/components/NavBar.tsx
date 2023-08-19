@@ -97,11 +97,35 @@ function NavBar() {
           </>
         ) : (
           <Box gap={2} display="flex" alignItems="center">
-            {data?.me?.privateAccount ? (
-              <CiLock color="white" />
-            ) : (
-              <BsGlobeAmericas color="white" />
-            )}
+            <Box display={["none", "none", "block"]}>
+              <Popover trigger="hover">
+                <PopoverTrigger>
+                  <Box>
+                    {data?.me?.privateAccount ? (
+                      <CiLock color="white" />
+                    ) : (
+                      <BsGlobeAmericas color="white" />
+                    )}
+                  </Box>
+                </PopoverTrigger>
+                <PopoverContent ml={4}>
+                  <PopoverArrow />
+                  <PopoverHeader>
+                    Profile privacy is set to{" "}
+                    {data?.me?.privateAccount ? "private." : "public."}
+                  </PopoverHeader>
+                  {/* <PopoverBody>
+                    <Link
+                      color={colorMode === "light" ? "blue.600" : "blue.200"}
+                      href="/account"
+                    >
+                      Update it here.
+                    </Link>
+                  </PopoverBody> */}
+                </PopoverContent>
+              </Popover>
+            </Box>
+
             <Text fontSize="xl" color="white" noOfLines={1}>
               Hey {data?.me?.username}!
             </Text>
