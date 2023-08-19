@@ -36,7 +36,7 @@ const main = async () => {
 
   app.use(
     cors({
-      origin: "http://localhost:3000",
+      origin: ["http://localhost:3000", "https://studio.apollographql.com"],
       credentials: true,
     })
   );
@@ -53,7 +53,7 @@ const main = async () => {
         secure: false,
         sameSite: "lax",
       },
-      secret: process.env.COOKIE_SEVRET || "dqoiwjdosaijd",
+      secret: process.env.COOKIE_SECRET || "dqoiwjdosaijd",
       resave: false,
       saveUninitialized: true,
     })

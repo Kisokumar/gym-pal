@@ -1,13 +1,24 @@
-import { Box, Button, Link, useColorMode } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Link,
+  Popover,
+  PopoverArrow,
+  PopoverBody,
+  PopoverContent,
+  PopoverHeader,
+  PopoverTrigger,
+  useColorMode,
+} from "@chakra-ui/react";
 import { useLogoutMutation, useMeQuery } from "../generated/graphql";
 
 import { BsGlobeAmericas } from "react-icons/bs";
 import { CiLock } from "react-icons/ci";
 import { DarkModeSwitch } from "./DarkModeSwitch";
+import { MdConstruction } from "react-icons/md";
 import React from "react";
 import { Text } from "@chakra-ui/react";
 import { createUrqlClient } from "../utils/createUrqlClient";
-import { isServer } from "../utils/isServer";
 import { useRouter } from "next/router";
 import { withUrqlClient } from "next-urql";
 
@@ -19,7 +30,7 @@ function NavBar() {
   const isLoginPage = router.pathname === "/login";
 
   const [{ fetching: logoutFetching }, logout] = useLogoutMutation();
-  const [{ data, fetching }] = useMeQuery({ pause: isServer() });
+  const [{ data, fetching }] = useMeQuery();
 
   return (
     <Box
@@ -27,33 +38,63 @@ function NavBar() {
       h={14}
       display="flex"
       alignItems="center"
-      justifyContent={"space-between"}
+      justifyContent="space-between"
     >
-      <Box ml={4} gap={2} display={"flex"}>
-        <Text fontSize="xl" color="white">
-          GymPal
-        </Text>
+      <Box ml={4} gap={2} display="flex" alignItems="center">
+        <Link href="/" style={{ textDecoration: "none" }}>
+          <Text fontSize="xl" color="white">
+            GymPal
+          </Text>
+        </Link>
+        <Popover trigger="hover">
+          <PopoverTrigger>
+            <Text
+              fontSize="xl"
+              color="white"
+              display="flex"
+              alignItems="center"
+              gap={2}
+            >
+              <MdConstruction />
+              beta
+            </Text>
+          </PopoverTrigger>
+          <PopoverContent ml={4}>
+            <PopoverArrow />
+            <PopoverHeader>We are currently in development,</PopoverHeader>
+            <PopoverBody>
+              Please report any bugs or request features{" "}
+              <Link
+                target="_blank"
+                color={colorMode === "light" ? "blue.600" : "blue.200"}
+                href="https://github.com/kisokumar/gym-pal/issues"
+              >
+                here.
+              </Link>
+            </PopoverBody>
+          </PopoverContent>
+        </Popover>
       </Box>
-      <Box mr={4} gap={2} display={"flex"}>
+      <Box mr={4} gap={2} display="flex" alignItems="center">
         {fetching || !data?.me ? (
           <>
             {!isRegisterPage && (
               <Link href="/signup">
-                <Button fontSize={"sm"} size={"sm"}>
+                <Button fontSize="sm" size="sm">
                   Sign Up
                 </Button>
               </Link>
             )}
             {!isLoginPage && (
               <Link href="/login">
-                <Button fontSize={"sm"} size={"sm"}>
+                <Button fontSize="sm" size="sm">
                   Log In
                 </Button>
               </Link>
             )}
           </>
         ) : (
-          <Box gap={2} display={"flex"} alignItems="center">
+          <Box gap={2} display="flex" alignItems="center">
             {data?.me?.privateAccount ? (
               <CiLock color="white" />
             ) : (
@@ -63,8 +104,8 @@ function NavBar() {
               Hey {data?.me?.username}!
             </Text>
             <Button
-              fontSize={"sm"}
-              size={"sm"}
+              fontSize="sm"
+              size="sm"
               isLoading={logoutFetching}
               onClick={() => {
                 logout({});
@@ -81,4 +122,4 @@ function NavBar() {
   );
 }
 
-export default withUrqlClient(createUrqlClient)(NavBar);
+export default withUrqlClient(createUrqlClient, { ssr: true })(NavBar);
