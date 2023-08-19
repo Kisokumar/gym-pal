@@ -46,34 +46,36 @@ function NavBar() {
             GymPal
           </Text>
         </Link>
-        <Popover trigger="hover">
-          <PopoverTrigger>
-            <Text
-              fontSize="xl"
-              color="white"
-              display="flex"
-              alignItems="center"
-              gap={2}
-            >
-              <MdConstruction />
-              beta
-            </Text>
-          </PopoverTrigger>
-          <PopoverContent ml={4}>
-            <PopoverArrow />
-            <PopoverHeader>We are currently in development,</PopoverHeader>
-            <PopoverBody>
-              Please report any bugs or request features{" "}
-              <Link
-                target="_blank"
-                color={colorMode === "light" ? "blue.600" : "blue.200"}
-                href="https://github.com/kisokumar/gym-pal/issues"
+        <Box display={["none", "none", "block"]}>
+          <Popover trigger="hover">
+            <PopoverTrigger>
+              <Text
+                fontSize="xl"
+                color="white"
+                display="flex"
+                alignItems="center"
+                gap={2}
               >
-                here.
-              </Link>
-            </PopoverBody>
-          </PopoverContent>
-        </Popover>
+                <MdConstruction />
+                beta
+              </Text>
+            </PopoverTrigger>
+            <PopoverContent ml={4}>
+              <PopoverArrow />
+              <PopoverHeader>We are currently in development,</PopoverHeader>
+              <PopoverBody>
+                Please report any bugs or request features{" "}
+                <Link
+                  target="_blank"
+                  color={colorMode === "light" ? "blue.600" : "blue.200"}
+                  href="https://github.com/kisokumar/gym-pal/issues"
+                >
+                  here.
+                </Link>
+              </PopoverBody>
+            </PopoverContent>
+          </Popover>
+        </Box>
       </Box>
       <Box mr={4} gap={2} display="flex" alignItems="center">
         {fetching || !data?.me ? (
@@ -100,7 +102,7 @@ function NavBar() {
             ) : (
               <BsGlobeAmericas color="white" />
             )}
-            <Text fontSize="xl" color="white">
+            <Text fontSize="xl" color="white" noOfLines={1}>
               Hey {data?.me?.username}!
             </Text>
             <Button

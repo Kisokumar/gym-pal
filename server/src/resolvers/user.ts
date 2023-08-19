@@ -52,13 +52,12 @@ class UserResponse {
 @Resolver()
 export class UserResolver {
   @Query(() => User, { nullable: true })
-  async me(@Ctx() { req, em }: MyContext) {
+  async me(@Ctx() { req }: MyContext) {
     if (!req.session.userId) {
       return null;
     }
 
-    const user = await em.findOne(User, { id: req.session.userId });
-    return user;
+    return await User.findOne({ where: { id: req.session.userId } });
   }
 
   @Mutation(() => UserResponse)
@@ -86,16 +85,19 @@ export class UserResolver {
 
     let user;
     try {
-      const result = em.create(User, {
-        username: options.username,
-        password: hashedPassword,
-        privateAccount: options.privateAccount,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      });
-      await em.persistAndFlush(result);
+      const result = await em
+        .createQueryBuilder()
+        .insert()
+        .into(User)
+        .values({
+          username: options.username,
+          password: hashedPassword,
+          privateAccount: options.privateAccount,
+        })
+        .returning("*")
+        .execute();
 
-      user = result;
+      user = result.raw[0];
       req.session.userId = user.id;
     } catch (err) {
       if (err.code === "23505") {
@@ -116,11 +118,9 @@ export class UserResolver {
   @Mutation(() => UserResponse)
   async login(
     @Arg("options") options: UsernamePasswordInput,
-    @Ctx() { em, req }: MyContext
+    @Ctx() { req }: MyContext
   ): Promise<UserResponse> {
-    const user = await em.findOne(User, {
-      username: options.username.toLowerCase(),
-    });
+    const user = await User.findOne({ where: { username: options.username } });
     if (!user) {
       return {
         errors: [
@@ -179,9 +179,9 @@ export class UserResolver {
       };
     }
 
-    const user = await em.findOne(User, { id: req.session.userId });
+    let userExists = await User.findOne({ where: { id: req.session.userId } });
 
-    if (!user) {
+    if (!userExists) {
       return {
         errors: [
           {
@@ -192,8 +192,16 @@ export class UserResolver {
       };
     }
 
-    user.privateAccount = isPrivate;
-    await em.persistAndFlush(user);
+    const result = await em
+      .createQueryBuilder()
+      .update(User)
+      .set({
+        privateAccount: isPrivate,
+      })
+      .returning("*")
+      .execute();
+
+    const user = result.raw[0];
 
     return { user };
   }

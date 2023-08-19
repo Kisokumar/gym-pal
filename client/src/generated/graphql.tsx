@@ -69,8 +69,8 @@ export type Query = {
   __typename?: 'Query';
   WorkoutSession?: Maybe<WorkoutSession>;
   WorkoutSessions: Array<WorkoutSession>;
-  hello: Scalars['String']['output'];
   me?: Maybe<User>;
+  serverConnection: Scalars['String']['output'];
 };
 
 
@@ -144,6 +144,11 @@ export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: number, username: string, privateAccount: boolean } | null };
+
+export type ServerConnectionQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ServerConnectionQuery = { __typename?: 'Query', serverConnection: string };
 
 export type WorkoutSessionsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -229,6 +234,15 @@ export const MeDocument = gql`
 
 export function useMeQuery(options?: Omit<Urql.UseQueryArgs<MeQueryVariables>, 'query'>) {
   return Urql.useQuery<MeQuery, MeQueryVariables>({ query: MeDocument, ...options });
+};
+export const ServerConnectionDocument = gql`
+    query ServerConnection {
+  serverConnection
+}
+    `;
+
+export function useServerConnectionQuery(options?: Omit<Urql.UseQueryArgs<ServerConnectionQueryVariables>, 'query'>) {
+  return Urql.useQuery<ServerConnectionQuery, ServerConnectionQueryVariables>({ query: ServerConnectionDocument, ...options });
 };
 export const WorkoutSessionsDocument = gql`
     query WorkoutSessions {

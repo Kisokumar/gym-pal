@@ -1,28 +1,38 @@
 import "reflect-metadata";
 
 import { ApolloServer } from "apollo-server-express";
-import { HelloResolver } from "./resolvers/hello";
-import { MikroORM } from "@mikro-orm/core";
+import { DataSource } from "typeorm";
 import RedisStore from "connect-redis";
+import { ServerConnectionResolver } from "./resolvers/serverStatus";
+import { User } from "./entities/User";
 import { UserResolver } from "./resolvers/user";
+import { WorkoutSession } from "./entities/WorkoutSession";
 import { WorkoutSessionResolver } from "./resolvers/workoutSession";
 import { __prod__ } from "./constants";
 import { buildSchema } from "type-graphql";
+import { config } from "dotenv";
 import cors from "cors";
 import { createClient } from "redis";
 import express from "express";
-import mikroOrmConfig from "./mikro-orm.config";
 import session from "express-session";
 
-const main = async () => {
-  const orm = await MikroORM.init(mikroOrmConfig);
-  await orm.getMigrator().up();
+config();
 
-  // quickly delete all users and sessions
-  // const userRepository = orm.em.getRepository(User);
-  // await userRepository.nativeDelete({});
-  // const sessionRepo = orm.em.getRepository(WorkoutSession);
-  // await sessionRepo.nativeDelete({});
+const main = async () => {
+  const AppDataSource = new DataSource({
+    type: "postgres",
+    database: process.env.DB_NAME,
+    username: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    synchronize: true,
+    logging: !__prod__,
+    entities: [WorkoutSession, User],
+  });
+  AppDataSource.initialize()
+    .then(() => {
+      // ee
+    })
+    .catch((error) => console.log(error));
 
   const app = express();
 
@@ -50,8 +60,8 @@ const main = async () => {
       cookie: {
         maxAge: oneWeek,
         httpOnly: true,
-        secure: false,
-        sameSite: "lax",
+        secure: true,
+        sameSite: "strict",
       },
       secret: process.env.COOKIE_SECRET || "dqoiwjdosaijd",
       resave: false,
@@ -61,10 +71,14 @@ const main = async () => {
 
   const apolloServer = new ApolloServer({
     schema: await buildSchema({
-      resolvers: [HelloResolver, WorkoutSessionResolver, UserResolver],
+      resolvers: [
+        ServerConnectionResolver,
+        WorkoutSessionResolver,
+        UserResolver,
+      ],
       validate: false,
     }),
-    context: ({ req, res }) => ({ em: orm.em, req, res }),
+    context: ({ req, res }) => ({ em: AppDataSource, req, res }),
   });
 
   await apolloServer.start();

@@ -1,8 +1,8 @@
-import { WorkoutSession } from "./entities/WorkoutSession";
 import { MikroORM } from "@mikro-orm/postgresql";
+import { User } from "./entities/User";
+import { WorkoutSession } from "./entities/WorkoutSession";
 import { __prod__ } from "./constants";
 import { config } from "dotenv";
-import { User } from "./entities/User";
 
 config();
 

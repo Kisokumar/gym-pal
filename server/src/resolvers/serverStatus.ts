@@ -1,9 +1,9 @@
 import { Query, Resolver } from "type-graphql";
 
 @Resolver()
-export class HelloResolver {
+export class ServerConnectionResolver {
   @Query(() => String)
-  hello() {
-    return "bye";
+  serverConnection() {
+    return "Ready!";
   }
 }
