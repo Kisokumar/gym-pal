@@ -31,31 +31,31 @@ function DeleteAccountButton() {
 
       if (deleteResult.data?.deleteAccount) {
         toast({
+          duration: 5000,
+          isClosable: true,
+          position: "bottom-right",
+          status: "success",
           title: `Your account was deleted!`,
           variant: "left-accent",
-          status: "success",
-          position: "bottom-right",
-          duration: 600,
-          isClosable: true,
         });
       } else {
         toast({
+          duration: 5000,
+          isClosable: true,
+          position: "bottom-right",
+          status: "error",
           title: "Sorry, there was an error while deleting your account.",
           variant: "left-accent",
-          status: "error",
-          duration: 600,
-          position: "bottom-right",
-          isClosable: true,
         });
       }
     } catch (error) {
       toast({
+        duration: 5000,
+        isClosable: true,
+        position: "bottom-right",
+        status: "error",
         title: "Sorry, there was an error while deleting your account.",
         variant: "left-accent",
-        status: "error",
-        duration: 600,
-        position: "bottom-right",
-        isClosable: true,
       });
     }
     onClose();
