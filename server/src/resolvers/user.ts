@@ -13,6 +13,7 @@ import {
   Resolver,
 } from "type-graphql";
 import { __prod__ } from "../constants";
+import LevenshteinDistance from "../utils/LevenshteinDistance";
 
 @InputType()
 class UsernamePasswordInput {
@@ -87,6 +88,26 @@ export class UserResolver {
       .andWhere("user.id != :currentUser", { currentUser })
       .take(limit)
       .getMany();
+
+    if (users.length < limit) {
+      const remainder = limit - users.length;
+      const allUsers = await em.getRepository(User).find();
+
+      const fuzzyUsers = allUsers
+        .filter(
+          (user) =>
+            user.id !== currentUser && !users.some((u) => u.id === user.id)
+        )
+        .filter((user) => LevenshteinDistance(user.username, search) <= 15)
+        .sort((userA, userB) => {
+          const distanceA = LevenshteinDistance(userA.username, search);
+          const distanceB = LevenshteinDistance(userB.username, search);
+          return distanceA - distanceB;
+        })
+        .slice(0, remainder);
+
+      return { users: [...users, ...fuzzyUsers] };
+    }
 
     return { users };
   }

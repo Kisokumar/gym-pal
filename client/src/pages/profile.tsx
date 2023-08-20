@@ -1,4 +1,4 @@
-import { Flex, Spinner, Text } from "@chakra-ui/react";
+import { Flex, Spinner, Text, useColorModeValue } from "@chakra-ui/react";
 import { useProfileQuery, useWorkoutSessionsQuery } from "../generated/graphql";
 
 import CentrePageWrapper from "../components/Reusable/CentrePageWrapper";
@@ -35,6 +35,8 @@ function Profile() {
   const username = userData?.me?.username;
   const createdAt = userData?.me?.createdAt;
 
+  const UseColorModeValue = useColorModeValue;
+
   return (
     <>
       <Head>
@@ -50,6 +52,7 @@ function Profile() {
             <Flex
               alignItems="center"
               border="solid"
+              borderColor={UseColorModeValue("gray.500", "gray.500")}
               borderRadius={4}
               borderWidth={1}
               justifyContent="space-between"
@@ -64,6 +67,7 @@ function Profile() {
             </Flex>
             <Flex
               border="solid"
+              borderColor={UseColorModeValue("gray.500", "gray.500")}
               borderRadius={4}
               borderWidth={1}
               direction={["column", "row", "row"]}

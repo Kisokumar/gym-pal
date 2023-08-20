@@ -15,8 +15,8 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { BsFillPersonCheckFill, BsGlobeAmericas } from "react-icons/bs";
-import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { CloseIcon, SearchIcon } from "@chakra-ui/icons";
+import { useRef, useState } from "react";
 
 import { CiLock } from "react-icons/ci";
 import ErrorCard from "../Reusable/ErrorCard";
@@ -49,15 +49,12 @@ function UserSearch({ placeholder }: UserSearchProps): JSX.Element {
     setIsFocused(true);
   };
 
-  const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
-    setQuery(e.target.value);
-  };
-
-  useEffect(() => {
+  const handleSearch = (e: string) => {
+    setQuery(e);
     reFetchUsers({
-      variables: { search: query },
+      variables: { search: e },
     });
-  }, [reFetchUsers, query]);
+  };
 
   const users = usersData?.users?.users;
 
@@ -110,8 +107,9 @@ function UserSearch({ placeholder }: UserSearchProps): JSX.Element {
                       placeholder={placeholder || "Placeholder"}
                       ref={searchInputRef}
                       rounded={"full"}
-                      value={query}
-                      onChange={handleSearch}
+                      onChange={(e) => {
+                        handleSearch(e.currentTarget.value);
+                      }}
                       onFocus={handleFocus}
                       onKeyDown={(e) => {
                         if (e.key === "Enter" && e.currentTarget.value !== "") {
@@ -175,7 +173,7 @@ function UserSearch({ placeholder }: UserSearchProps): JSX.Element {
                 zIndex={5}
               >
                 <Box maxH={"lg"} overflowX={"hidden"} overflowY={"auto"}>
-                  <List maxW={["sm", "2xl", "2xl"]} mt={2}>
+                  <List maxW={["2xl", "2xl", "2xl"]} mt={2}>
                     <Divider mb={3}></Divider>
                     <Flex flexDirection={"column"} gap={2}>
                       {users && users?.length > 0 ? (
