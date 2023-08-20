@@ -31,6 +31,9 @@ function DeleteAccountButton() {
 
       if (deleteResult.data?.deleteAccount) {
         toast({
+          containerStyle: {
+            marginBottom: 10,
+          },
           duration: 5000,
           isClosable: true,
           position: "bottom-right",
@@ -40,6 +43,9 @@ function DeleteAccountButton() {
         });
       } else {
         toast({
+          containerStyle: {
+            marginBottom: 10,
+          },
           duration: 5000,
           isClosable: true,
           position: "bottom-right",
@@ -50,6 +56,9 @@ function DeleteAccountButton() {
       }
     } catch (error) {
       toast({
+        containerStyle: {
+          marginBottom: 10,
+        },
         duration: 5000,
         isClosable: true,
         position: "bottom-right",
