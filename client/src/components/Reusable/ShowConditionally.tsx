@@ -3,7 +3,7 @@
 import React from "react";
 
 interface ShowConditionallyComponentPropTypes {
-  fallback?: any;
+  fallback?: React.ReactNode;
   variable: boolean;
   children?: React.ReactNode;
 }

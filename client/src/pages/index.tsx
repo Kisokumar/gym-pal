@@ -1,6 +1,7 @@
+import { Flex, Spinner } from "@chakra-ui/react";
 import { useMeQuery, useWorkoutSessionsQuery } from "../generated/graphql";
 
-import { Flex } from "@chakra-ui/react";
+import CentrePageWrapper from "../components/Reusable/CentrePageWrapper";
 import Search from "../components/Search/Search";
 import WelcomePage from "../components/Reusable/WelcomePage";
 import { createUrqlClient } from "../utils/createUrqlClient";
@@ -31,14 +32,9 @@ const Index = () => {
     );
   }
   return (
-    <>
-      <p>Main Page</p>
-      {!sessions ? (
-        <p>Error</p>
-      ) : (
-        sessions.map((p) => <div key={p.id}>{p.sessionType}</div>)
-      )}
-    </>
+    <CentrePageWrapper>
+      <Spinner size="xl" />
+    </CentrePageWrapper>
   );
 };
 

@@ -7,16 +7,16 @@ export default function Search(): JSX.Element {
   const UseColorModeValue = useColorModeValue;
   return (
     <>
-      <Flex my={2} justifyContent={"center"} w={"full"}>
+      <Flex justifyContent={"center"} my={2} w={"full"}>
         <Card
           bg={UseColorModeValue("gray.200", "gray.900")}
-          w={"100%"}
+          flexDir={"row"}
           maxW={"2xl"}
           mx={4}
-          flexDir={"row"}
+          w={"100%"}
         >
-          <Flex w={"100%"} m={4}>
-            <UserSearch placeholder="Search for users!" />
+          <Flex m={4} w={"100%"}>
+            <UserSearch pageProps={undefined} placeholder="Search for users!" />
           </Flex>
         </Card>
       </Flex>
