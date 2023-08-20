@@ -14,6 +14,7 @@ import {
 import { Text } from "@chakra-ui/react";
 import { createUrqlClient } from "../../utils/createUrqlClient";
 import { useDeleteAccountMutation } from "../../generated/graphql";
+import { useRouter } from "next/router";
 import { withUrqlClient } from "next-urql";
 
 function PrivateAccountSwitch() {
@@ -21,6 +22,7 @@ function PrivateAccountSwitch() {
   const [{ fetching: deletingAccount }, deleteAccount] =
     useDeleteAccountMutation();
 
+  const router = useRouter();
   const toast = useToast();
 
   const handleDelete = async () => {
@@ -46,7 +48,6 @@ function PrivateAccountSwitch() {
           isClosable: true,
         });
       }
-      onClose();
     } catch (error) {
       toast({
         title: "Sorry, there was an error while deleting your account.",
@@ -57,6 +58,8 @@ function PrivateAccountSwitch() {
         isClosable: true,
       });
     }
+    onClose();
+    router.push("/login");
   };
 
   return (
