@@ -78,11 +78,17 @@ export type Query = {
   WorkoutSessions: Array<WorkoutSession>;
   me?: Maybe<User>;
   serverConnection: Scalars['String']['output'];
+  users: UsersResponse;
 };
 
 
 export type QueryWorkoutSessionArgs = {
   id: Scalars['Int']['input'];
+};
+
+
+export type QueryUsersArgs = {
+  search: Scalars['String']['input'];
 };
 
 export type User = {
@@ -110,6 +116,12 @@ export type UsernamePasswordRegisterInput = {
   password: Scalars['String']['input'];
   privateAccount: Scalars['Boolean']['input'];
   username: Scalars['String']['input'];
+};
+
+export type UsersResponse = {
+  __typename?: 'UsersResponse';
+  errors?: Maybe<Array<FieldError>>;
+  users?: Maybe<Array<User>>;
 };
 
 export type WorkoutSession = {
@@ -166,6 +178,13 @@ export type ProfileQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type ProfileQuery = { __typename?: 'Query', me?: { __typename?: 'User', createdAt: string, id: number, username: string, privateAccount: boolean } | null };
+
+export type UserSearchQueryVariables = Exact<{
+  search: Scalars['String']['input'];
+}>;
+
+
+export type UserSearchQuery = { __typename?: 'Query', users: { __typename?: 'UsersResponse', errors?: Array<{ __typename?: 'FieldError', field: string, message: string }> | null, users?: Array<{ __typename?: 'User', id: number, username: string, privateAccount: boolean }> | null } };
 
 export type ServerConnectionQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -275,6 +294,23 @@ export const ProfileDocument = gql`
 
 export function useProfileQuery(options?: Omit<Urql.UseQueryArgs<ProfileQueryVariables>, 'query'>) {
   return Urql.useQuery<ProfileQuery, ProfileQueryVariables>({ query: ProfileDocument, ...options });
+};
+export const UserSearchDocument = gql`
+    query UserSearch($search: String!) {
+  users(search: $search) {
+    errors {
+      field
+      message
+    }
+    users {
+      ...RegularUser
+    }
+  }
+}
+    ${RegularUserFragmentDoc}`;
+
+export function useUserSearchQuery(options: Omit<Urql.UseQueryArgs<UserSearchQueryVariables>, 'query'>) {
+  return Urql.useQuery<UserSearchQuery, UserSearchQueryVariables>({ query: UserSearchDocument, ...options });
 };
 export const ServerConnectionDocument = gql`
     query ServerConnection {

@@ -1,0 +1,11 @@
+query UserSearch($search: String!) {
+  users(search: $search) {
+    errors {
+      field
+      message
+    }
+    users {
+      ...RegularUser
+    }
+  }
+}

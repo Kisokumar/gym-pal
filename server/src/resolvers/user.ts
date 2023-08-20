@@ -49,14 +49,53 @@ class UserResponse {
   user?: User;
 }
 
+@ObjectType()
+class UsersResponse {
+  @Field(() => [FieldError], { nullable: true })
+  errors?: FieldError[];
+
+  @Field(() => [User], { nullable: true })
+  users?: User[];
+}
+
 @Resolver()
 export class UserResolver {
+  @Query(() => UsersResponse)
+  async users(
+    @Arg("search") search: string,
+    @Ctx() { em, req }: MyContext
+  ): Promise<UsersResponse> {
+    const limit = 5;
+
+    if (search == null || search === "") {
+      return {
+        errors: [
+          {
+            field: "query",
+            message: "A search string is required",
+          },
+        ],
+      };
+    }
+
+    const currentUser = req.session.userId;
+
+    const users = await em
+      .getRepository(User)
+      .createQueryBuilder("user")
+      .where("user.username ILIKE :search", { search: `%${search}%` })
+      .andWhere("user.id != :currentUser", { currentUser })
+      .take(limit)
+      .getMany();
+
+    return { users };
+  }
+
   @Query(() => User, { nullable: true })
   async me(@Ctx() { req }: MyContext) {
     if (!req.session.userId) {
       return null;
     }
-
     return await User.findOne({ where: { id: req.session.userId } });
   }
 
