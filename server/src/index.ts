@@ -60,8 +60,8 @@ const main = async () => {
       cookie: {
         maxAge: oneWeek,
         httpOnly: true,
-        secure: true,
-        sameSite: "strict",
+        secure: false,
+        sameSite: "lax",
       },
       secret: process.env.COOKIE_SECRET || "dqoiwjdosaijd",
       resave: false,

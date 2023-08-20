@@ -163,6 +163,50 @@ export class UserResolver {
     );
   }
 
+  @Mutation(() => Boolean)
+  async deleteAccount(@Ctx() { em, req, res }: MyContext): Promise<boolean> {
+    try {
+      if (!req.session.userId) {
+        return false;
+      }
+
+      const result = await em
+        .createQueryBuilder()
+        .delete()
+        .from(User)
+        .where("id = :id", { id: req.session.userId })
+        .execute();
+
+      if (result.affected === 0) {
+        return false;
+      }
+
+      const userExists = await User.findOne({
+        where: { id: req.session.userId },
+      });
+
+      if (userExists) {
+        return false;
+      }
+
+      await new Promise((resolve, reject) => {
+        req.session.destroy((err) => {
+          if (err) {
+            console.error(err);
+            reject(err);
+          } else {
+            res.clearCookie("qid");
+            resolve(true);
+          }
+        });
+      });
+      return true;
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
+  }
+
   @Mutation(() => UserResponse)
   async changePrivacy(
     @Arg("isPrivate") isPrivate: boolean,
@@ -195,6 +239,9 @@ export class UserResolver {
     const result = await em
       .createQueryBuilder()
       .update(User)
+      .where({
+        id: req.session.userId,
+      })
       .set({
         privateAccount: isPrivate,
       })
@@ -203,6 +250,51 @@ export class UserResolver {
 
     const user = result.raw[0];
 
+    return { user };
+  }
+
+  @Mutation(() => UserResponse)
+  async changeHideConnections(
+    @Arg("hideConnections") hideConnections: boolean,
+    @Ctx() { em, req }: MyContext
+  ): Promise<UserResponse> {
+    if (!req.session.userId) {
+      return {
+        errors: [
+          {
+            field: "user",
+            message: "User not authenticated.",
+          },
+        ],
+      };
+    }
+
+    let userExists = await User.findOne({ where: { id: req.session.userId } });
+
+    if (!userExists) {
+      return {
+        errors: [
+          {
+            field: "user",
+            message: "User not found.",
+          },
+        ],
+      };
+    }
+
+    const result = await em
+      .createQueryBuilder()
+      .update(User)
+      .where({
+        id: req.session.userId,
+      })
+      .set({
+        hideConnections,
+      })
+      .returning("*")
+      .execute();
+
+    const user = result.raw[0];
     return { user };
   }
 }

@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
+  ChangePrivacyMutation,
+  DeleteAccountMutation,
   LoginMutation,
   LogoutMutation,
   MeDocument,
@@ -65,6 +67,42 @@ export const createUrqlClient = (ssrExchange: any) => ({
               },
               _result,
               () => ({ me: null })
+            );
+          },
+          changePrivacy: (_result, _args, cache, _info) => {
+            betterUpdateQuery<ChangePrivacyMutation, MeQuery>(
+              cache,
+              {
+                query: MeDocument,
+              },
+              _result,
+              (result, query) => {
+                if (result.changePrivacy.errors) {
+                  return query;
+                } else {
+                  return {
+                    me: result.changePrivacy.user,
+                  };
+                }
+              }
+            );
+          },
+          deleteAccount: (_result, _args, cache, _info) => {
+            betterUpdateQuery<DeleteAccountMutation, MeQuery>(
+              cache,
+              {
+                query: MeDocument,
+              },
+              _result,
+              (result, query) => {
+                if (!result.deleteAccount) {
+                  return query;
+                } else {
+                  return {
+                    me: null,
+                  };
+                }
+              }
             );
           },
         },

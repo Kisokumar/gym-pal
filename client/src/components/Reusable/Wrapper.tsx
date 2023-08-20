@@ -11,7 +11,13 @@ export default function Wrapper({
   variant = "regular",
 }: WrapperProps) {
   return (
-    <Box maxW={variant === "small" ? "400px" : "800px"} mt={8} mx="auto" px={4}>
+    <Box
+      maxW={variant === "small" ? "400px" : "800px"}
+      mt={8}
+      mx="auto"
+      px={4}
+      w="full"
+    >
       {children}
     </Box>
   );

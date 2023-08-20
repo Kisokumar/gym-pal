@@ -1,10 +1,12 @@
-import { Box, Button, Checkbox, Link, useColorMode } from "@chakra-ui/react";
+import { Box, Button, Checkbox, useColorMode } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
 
-import InputField from "../components/InputField";
+import Head from "next/head";
+import InputField from "../components/Reusable/InputField";
+import Link from "next/link";
 import React from "react";
 import { Text } from "@chakra-ui/react";
-import Wrapper from "../components/Wrapper";
+import Wrapper from "../components/Reusable/Wrapper";
 import { createUrqlClient } from "../utils/createUrqlClient";
 import { toErrorMap } from "../utils/toErrorMap";
 import { useRegisterMutation } from "../generated/graphql";
@@ -18,6 +20,13 @@ function SignUp() {
 
   return (
     <Box mt="23vh" justifyContent="center" alignItems="center">
+      <Head>
+        <title>Sign up • GymPal</title>
+        <meta
+          name="description"
+          content="GymPal - Your Ultimate Fitness Tracking Companion. Achieve your fitness goals with GymPal, the all-in-one platform to track and visualize your gym progress. Connect with friends, view their profiles, and compare workout statistics."
+        />
+      </Head>
       <Wrapper variant="small">
         <Formik
           initialValues={{ username: "", password: "", privateAccount: true }}
@@ -58,9 +67,12 @@ function SignUp() {
                 >
                   Sign Up
                 </Button>
-                <Box display="flex">
-                  <Text>
-                    Already have an account?{" "}
+                <Box display="flex" gap={1}>
+                  <Text>Already have an account? </Text>
+                  <Text
+                    color={colorMode === "dark" ? "blue.400" : "blue.600"}
+                    _hover={{ textDecoration: "underline" }}
+                  >
                     <Link
                       color={colorMode === "dark" ? "blue.400" : "blue.600"}
                       href="/login"
@@ -78,4 +90,4 @@ function SignUp() {
   );
 }
 
-export default withUrqlClient(createUrqlClient, { ssr: true })(SignUp);
+export default withUrqlClient(createUrqlClient)(SignUp);

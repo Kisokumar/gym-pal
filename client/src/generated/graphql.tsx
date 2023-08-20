@@ -25,13 +25,20 @@ export type FieldError = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  changeHideConnections: UserResponse;
   changePrivacy: UserResponse;
   createWorkoutSession: WorkoutSession;
+  deleteAccount: Scalars['Boolean']['output'];
   deleteWorkoutSession: Scalars['Boolean']['output'];
   login: UserResponse;
   logout: Scalars['Boolean']['output'];
   register: UserResponse;
   updateWorkoutSession?: Maybe<WorkoutSession>;
+};
+
+
+export type MutationChangeHideConnectionsArgs = {
+  hideConnections: Scalars['Boolean']['input'];
 };
 
 
@@ -81,6 +88,7 @@ export type QueryWorkoutSessionArgs = {
 export type User = {
   __typename?: 'User';
   createdAt: Scalars['String']['output'];
+  hideConnections: Scalars['Boolean']['output'];
   id: Scalars['Float']['output'];
   privateAccount: Scalars['Boolean']['output'];
   updatedAt: Scalars['String']['output'];
@@ -107,7 +115,11 @@ export type UsernamePasswordRegisterInput = {
 export type WorkoutSession = {
   __typename?: 'WorkoutSession';
   createdAt: Scalars['String']['output'];
+  creator: User;
+  creatorId: Scalars['Float']['output'];
   id: Scalars['Float']['output'];
+  sessionEndTime: Scalars['String']['output'];
+  sessionStartTime: Scalars['String']['output'];
   sessionType: Scalars['String']['output'];
   updatedAt: Scalars['String']['output'];
 };
@@ -120,6 +132,11 @@ export type ChangePrivacyMutationVariables = Exact<{
 
 
 export type ChangePrivacyMutation = { __typename?: 'Mutation', changePrivacy: { __typename?: 'UserResponse', errors?: Array<{ __typename?: 'FieldError', field: string, message: string }> | null, user?: { __typename?: 'User', id: number, username: string, privateAccount: boolean } | null } };
+
+export type DeleteAccountMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type DeleteAccountMutation = { __typename?: 'Mutation', deleteAccount: boolean };
 
 export type LoginMutationVariables = Exact<{
   options: UsernamePasswordInput;
@@ -144,6 +161,11 @@ export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: number, username: string, privateAccount: boolean } | null };
+
+export type ProfileQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ProfileQuery = { __typename?: 'Query', me?: { __typename?: 'User', createdAt: string, id: number, username: string, privateAccount: boolean } | null };
 
 export type ServerConnectionQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -178,6 +200,15 @@ export const ChangePrivacyDocument = gql`
 
 export function useChangePrivacyMutation() {
   return Urql.useMutation<ChangePrivacyMutation, ChangePrivacyMutationVariables>(ChangePrivacyDocument);
+};
+export const DeleteAccountDocument = gql`
+    mutation DeleteAccount {
+  deleteAccount
+}
+    `;
+
+export function useDeleteAccountMutation() {
+  return Urql.useMutation<DeleteAccountMutation, DeleteAccountMutationVariables>(DeleteAccountDocument);
 };
 export const LoginDocument = gql`
     mutation Login($options: UsernamePasswordInput!) {
@@ -225,15 +256,25 @@ export function useRegisterMutation() {
 export const MeDocument = gql`
     query Me {
   me {
-    id
-    username
-    privateAccount
+    ...RegularUser
   }
 }
-    `;
+    ${RegularUserFragmentDoc}`;
 
 export function useMeQuery(options?: Omit<Urql.UseQueryArgs<MeQueryVariables>, 'query'>) {
   return Urql.useQuery<MeQuery, MeQueryVariables>({ query: MeDocument, ...options });
+};
+export const ProfileDocument = gql`
+    query Profile {
+  me {
+    ...RegularUser
+    createdAt
+  }
+}
+    ${RegularUserFragmentDoc}`;
+
+export function useProfileQuery(options?: Omit<Urql.UseQueryArgs<ProfileQueryVariables>, 'query'>) {
+  return Urql.useQuery<ProfileQuery, ProfileQueryVariables>({ query: ProfileDocument, ...options });
 };
 export const ServerConnectionDocument = gql`
     query ServerConnection {

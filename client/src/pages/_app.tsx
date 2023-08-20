@@ -1,10 +1,12 @@
 import { ChakraProvider, Flex } from "@chakra-ui/react";
 
 import { AppProps } from "next/app";
-import Footer from "../components/Footer";
+import Footer from "../components/Reusable/Footer";
 import Head from "next/head";
-import NavBar from "../components/NavBar";
+import NavBar from "../components/Reusable/NavBar";
+import { createUrqlClient } from "../utils/createUrqlClient";
 import theme from "../theme";
+import { withUrqlClient } from "next-urql";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -25,4 +27,6 @@ function MyApp({ Component, pageProps }: AppProps) {
   );
 }
 
-export default MyApp;
+// export default MyApp;
+
+export default withUrqlClient(createUrqlClient)(MyApp);

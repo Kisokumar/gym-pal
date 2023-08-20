@@ -1,10 +1,12 @@
-import { Box, Button, Link, useColorMode } from "@chakra-ui/react";
+import { Box, Button, useColorMode } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
 
-import InputField from "../components/InputField";
+import Head from "next/head";
+import InputField from "../components/Reusable/InputField";
+import Link from "next/link";
 import React from "react";
 import { Text } from "@chakra-ui/react";
-import Wrapper from "../components/Wrapper";
+import Wrapper from "../components/Reusable/Wrapper";
 import { createUrqlClient } from "../utils/createUrqlClient";
 import { toErrorMap } from "../utils/toErrorMap";
 import { useLoginMutation } from "../generated/graphql";
@@ -18,6 +20,13 @@ function Login() {
 
   return (
     <Box mt="23vh" justifyContent="center" alignItems="center">
+      <Head>
+        <title>Log In • Gympal</title>
+        <meta
+          name="description"
+          content="GymPal - Your Ultimate Fitness Tracking Companion. Achieve your fitness goals with GymPal, the all-in-one platform to track and visualize your gym progress. Connect with friends, view their profiles, and compare workout statistics."
+        />
+      </Head>
       <Wrapper variant="small">
         <Formik
           initialValues={{ username: "", password: "" }}
@@ -38,7 +47,7 @@ function Login() {
               <Box mt={4}>
                 <InputField type="password" name="password" label="Password" />
               </Box>
-              <Box mt={2} display="flex">
+              <Box mt={4} display="flex">
                 <Button
                   type="submit"
                   isLoading={isSubmitting}
@@ -48,9 +57,12 @@ function Login() {
                   Log In
                 </Button>
               </Box>
-              <Box mt={2} display="flex">
-                <Text>
-                  Don't have an account?{" "}
+              <Box display="flex" gap={1}>
+                <Text>Don't have an account?</Text>
+                <Text
+                  color={colorMode === "dark" ? "blue.400" : "blue.600"}
+                  _hover={{ textDecoration: "underline" }}
+                >
                   <Link
                     color={colorMode === "dark" ? "blue.400" : "blue.600"}
                     href="/signup"
@@ -66,4 +78,4 @@ function Login() {
     </Box>
   );
 }
-export default withUrqlClient(createUrqlClient, { ssr: true })(Login);
+export default withUrqlClient(createUrqlClient)(Login);

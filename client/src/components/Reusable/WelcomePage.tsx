@@ -1,8 +1,8 @@
 import { Box, Button, Card, Text } from "@chakra-ui/react";
 
 import React from "react";
-import Wrapper from "../components/Wrapper";
-import { createUrqlClient } from "../utils/createUrqlClient";
+import Wrapper from "./Wrapper";
+import { createUrqlClient } from "../../utils/createUrqlClient";
 import { useRouter } from "next/router";
 import { withUrqlClient } from "next-urql";
 
@@ -18,13 +18,12 @@ function Login() {
               <Text fontSize="xl" display="flex" gap={2} alignItems="center">
                 👋 Welcome to GymPal!
               </Text>
-              {/* <Text mt={4}>Get started below</Text> */}
               <Box mt={2} display="flex" gap={2}>
                 <Button
                   type="submit"
                   flex={1}
                   onClick={() => {
-                    router.push("/login");
+                    router.push("/signup");
                   }}
                 >
                   Sign Up

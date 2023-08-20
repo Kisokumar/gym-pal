@@ -13,20 +13,20 @@ export default function SmallCentered() {
     >
       <Box
         borderTopWidth={1}
-        borderStyle={"solid"}
+        borderStyle="solid"
         borderColor={colorMode === "light" ? "gray.200" : "gray.700"}
         w="100%"
       >
         <Container
           as={Stack}
-          maxW={"9xl"}
+          maxW="9xl"
           py={2}
           direction={{ base: "column", md: "row" }}
           spacing={6}
           justify={{ base: "center", md: "space-between", sm: "space-between" }}
           align={{ base: "center", md: "center" }}
         >
-          <Text fontSize={"xs"} fontWeight={"hairline"}>
+          <Text fontSize="xs" fontWeight="hairline">
             © 2022 Kisho Makes Stuff. All Rights Reserved.
           </Text>
         </Container>

@@ -10,8 +10,8 @@ import {
 import { BiError } from "react-icons/bi";
 import React from "react";
 import { Text } from "@chakra-ui/react";
-import Wrapper from "../components/Wrapper";
-import { createUrqlClient } from "../utils/createUrqlClient";
+import Wrapper from "./Wrapper";
+import { createUrqlClient } from "../../utils/createUrqlClient";
 import { useRouter } from "next/router";
 import { withUrqlClient } from "next-urql";
 
