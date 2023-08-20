@@ -8,6 +8,7 @@ import {
 } from "@chakra-ui/react";
 
 import { BiError } from "react-icons/bi";
+import CentrePageWrapper from "./CentrePageWrapper";
 import React from "react";
 import { Text } from "@chakra-ui/react";
 import Wrapper from "./Wrapper";
@@ -20,7 +21,7 @@ function Login() {
   const { colorMode } = useColorMode();
 
   return (
-    <Box mt="23vh" justifyContent="center" alignItems="center">
+    <CentrePageWrapper>
       <Wrapper variant="small">
         <>
           <Card overflow="hidden" variant="outline">
@@ -56,7 +57,7 @@ function Login() {
           </Card>
         </>
       </Wrapper>
-    </Box>
+    </CentrePageWrapper>
   );
 }
 export default withUrqlClient(createUrqlClient, { ssr: true })(Login);

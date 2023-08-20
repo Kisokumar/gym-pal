@@ -89,7 +89,7 @@ function NavBar() {
             GymPal
           </Text>
         </Link>
-        <Box display={["none", "none", "block"]}>
+        <Box display={["none", "none", "flex"]}>
           <Popover trigger="hover">
             <PopoverTrigger>
               <Text
@@ -127,10 +127,10 @@ function NavBar() {
               <>{navButtons}</>
             ) : (
               <Box gap={2} display="flex" alignItems="center">
-                <Box display={["none", "none", "block"]}>
+                <Box display={["none", "none", "flex"]} alignItems="center">
                   <Popover trigger="hover">
                     <PopoverTrigger>
-                      <Box>
+                      <Box mx={2}>
                         {data?.me?.privateAccount ? (
                           <CiLock color="white" />
                         ) : (
@@ -160,13 +160,13 @@ function NavBar() {
                       </PopoverBody>
                     </PopoverContent>
                   </Popover>
+                  <Link href="profile">
+                    <Text fontSize="xl" color="white" noOfLines={1}>
+                      Hey {data?.me?.username}!
+                    </Text>
+                  </Link>{" "}
                 </Box>
 
-                <Link href="profile">
-                  <Text fontSize="xl" color="white" noOfLines={1}>
-                    Hey {data?.me?.username}!
-                  </Text>
-                </Link>
                 {router.pathname !== "/profile" && (
                   <Button
                     fontSize="sm"

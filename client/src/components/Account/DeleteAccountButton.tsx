@@ -17,7 +17,7 @@ import { useDeleteAccountMutation } from "../../generated/graphql";
 import { useRouter } from "next/router";
 import { withUrqlClient } from "next-urql";
 
-function PrivateAccountSwitch() {
+function DeleteAccountButton() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [{ fetching: deletingAccount }, deleteAccount] =
     useDeleteAccountMutation();
@@ -82,7 +82,7 @@ function PrivateAccountSwitch() {
         motionPreset="slideInBottom"
       >
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent mx={4}>
           <ModalHeader>Delete Account</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
@@ -92,11 +92,9 @@ function PrivateAccountSwitch() {
             </Text>
           </ModalBody>
           <ModalFooter>
-            <Button mr={3} onClick={onClose}>
-              Close
-            </Button>
             <Button
               maxW={80}
+              mr={3}
               isLoading={deletingAccount}
               onClick={async () => {
                 handleDelete();
@@ -107,7 +105,8 @@ function PrivateAccountSwitch() {
               }}
             >
               Confirm Deletion
-            </Button>
+            </Button>{" "}
+            <Button onClick={onClose}>Cancel</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
@@ -115,4 +114,4 @@ function PrivateAccountSwitch() {
   );
 }
 
-export default withUrqlClient(createUrqlClient)(PrivateAccountSwitch);
+export default withUrqlClient(createUrqlClient)(DeleteAccountButton);

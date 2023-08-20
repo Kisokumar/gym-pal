@@ -1,5 +1,6 @@
 import { Box, Button, Card, Text } from "@chakra-ui/react";
 
+import CentrePageWrapper from "./CentrePageWrapper";
 import React from "react";
 import Wrapper from "./Wrapper";
 import { createUrqlClient } from "../../utils/createUrqlClient";
@@ -10,7 +11,7 @@ function Login() {
   const router = useRouter();
 
   return (
-    <Box mt="23vh" justifyContent="center" alignItems="center">
+    <CentrePageWrapper>
       <Wrapper variant="small">
         <>
           <Card overflow="hidden" variant="outline">
@@ -42,7 +43,7 @@ function Login() {
           </Card>
         </>
       </Wrapper>
-    </Box>
+    </CentrePageWrapper>
   );
 }
 export default withUrqlClient(createUrqlClient, { ssr: true })(Login);

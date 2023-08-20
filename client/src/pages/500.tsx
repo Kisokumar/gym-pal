@@ -1,6 +1,7 @@
 import { Box, Button, Card, Heading } from "@chakra-ui/react";
 
 import { BiError } from "react-icons/bi";
+import CentrePageWrapper from "../components/Reusable/CentrePageWrapper";
 import Head from "next/head";
 import { Text } from "@chakra-ui/react";
 import Wrapper from "../components/Reusable/Wrapper";
@@ -12,15 +13,15 @@ const Custom500Page = () => {
   const router = useRouter();
 
   return (
-    <>
-      <Head>
-        <title>Error • GymPal</title>
-        <meta
-          name="description"
-          content="GymPal - Your Ultimate Fitness Tracking Companion. Achieve your fitness goals with GymPal, the all-in-one platform to track and visualize your gym progress. Connect with friends, view their profiles, and compare workout statistics."
-        />
-      </Head>
-      <Box mt="23vh" justifyContent="center" alignItems="center">
+    <CentrePageWrapper>
+      <>
+        <Head>
+          <title>Error • GymPal</title>
+          <meta
+            name="description"
+            content="GymPal - Your Ultimate Fitness Tracking Companion. Achieve your fitness goals with GymPal, the all-in-one platform to track and visualize your gym progress. Connect with friends, view their profiles, and compare workout statistics."
+          />
+        </Head>
         <Wrapper variant="small">
           <>
             <Card overflow="hidden" variant="outline">
@@ -45,8 +46,8 @@ const Custom500Page = () => {
             </Card>
           </>
         </Wrapper>
-      </Box>
-    </>
+      </>
+    </CentrePageWrapper>
   );
 };
 

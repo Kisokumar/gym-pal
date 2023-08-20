@@ -1,6 +1,7 @@
-import { Box, Flex, Spinner, Text } from "@chakra-ui/react";
+import { Flex, Spinner, Text } from "@chakra-ui/react";
 import { useProfileQuery, useWorkoutSessionsQuery } from "../generated/graphql";
 
+import CentrePageWrapper from "../components/Reusable/CentrePageWrapper";
 import DeleteAccountButton from "../components/Account/DeleteAccountButton";
 import Head from "next/head";
 import LoggedOutPage from "../components/Reusable/LoggedOutPage";
@@ -25,9 +26,9 @@ function Profile() {
     );
   } else if (fetching) {
     return (
-      <Box mt="23vh" justifyContent="center" alignItems="center" display="flex">
+      <CentrePageWrapper>
         <Spinner size="xl" />
-      </Box>
+      </CentrePageWrapper>
     );
   }
 
@@ -47,12 +48,12 @@ function Profile() {
         <Wrapper variant="regular">
           <Flex direction="column" gap={2} p={4}>
             <Flex
-              justifyContent="space-between"
-              alignItems="center"
               border="solid"
-              p={2}
+              alignItems="center"
               borderRadius={4}
               borderWidth={1}
+              justifyContent="space-between"
+              p={2}
             >
               <Text display="flex" alignItems="center" gap={2}>
                 {username}
@@ -62,14 +63,22 @@ function Profile() {
               </Flex>
             </Flex>
             <Flex
-              justifyContent="space-between"
               border="solid"
-              p={2}
               borderRadius={4}
               borderWidth={1}
+              direction={["column", "row", "row"]}
+              gap={["2", "none", "none"]}
+              justifyContent={"space-between"}
+              p={2}
             >
-              <Text>Joined {unixToDate(Number(createdAt), "short")}</Text>
-              <Text> {sessions?.length} sessions logged</Text>
+              <Flex gap={1} justifyContent={["space-between", "none", "none"]}>
+                <Text>Joined </Text>
+                <Text>{unixToDate(Number(createdAt), "short")}</Text>
+              </Flex>
+              <Flex gap={1} justifyContent={["space-between", "none", "none"]}>
+                <Text>Sessions Logged </Text>
+                <Text> {sessions?.length} </Text>
+              </Flex>
               <Flex>
                 <PrivateAccountSwitch pageProps={undefined} />
               </Flex>
