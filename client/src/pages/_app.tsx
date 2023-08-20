@@ -14,11 +14,11 @@ function MyApp({ Component, pageProps }: AppProps) {
       <Head>
         <title>GymPal</title>
         <meta
-          name="description"
           content="GymPal - Your Ultimate Fitness Tracking Companion. Achieve your fitness goals with GymPal, the all-in-one platform to track and visualize your gym progress. Connect with friends, view their profiles, and compare workout statistics."
+          name="description"
         />
       </Head>
-      <Flex h="100vh" direction="column">
+      <Flex direction="column" h="100vh">
         <NavBar {...pageProps} />
         <Component {...pageProps} />
         <Footer />

@@ -16,13 +16,13 @@ function Login() {
         <>
           <Card overflow="hidden" variant="outline">
             <Box display="flex" flexDirection="column" m={4}>
-              <Text fontSize="xl" display="flex" gap={2} alignItems="center">
+              <Text alignItems="center" display="flex" fontSize="xl" gap={2}>
                 👋 Welcome to GymPal!
               </Text>
-              <Box mt={2} display="flex" gap={2}>
+              <Box display="flex" gap={2} mt={2}>
                 <Button
-                  type="submit"
                   flex={1}
+                  type="submit"
                   onClick={() => {
                     router.push("/signup");
                   }}
@@ -30,8 +30,8 @@ function Login() {
                   Sign Up
                 </Button>
                 <Button
-                  type="submit"
                   flex={1}
+                  type="submit"
                   onClick={() => {
                     router.push("/login");
                   }}

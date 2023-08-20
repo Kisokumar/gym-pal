@@ -65,21 +65,21 @@ function DeleteAccountButton() {
   return (
     <>
       <Button
-        size="sm"
-        maxW={80}
-        onClick={onOpen}
         _hover={{
           bg: "red.500",
           color: "black",
         }}
+        maxW={80}
+        size="sm"
+        onClick={onOpen}
       >
         Delete Account
       </Button>
       <Modal
-        isCentered
-        onClose={onClose}
         isOpen={isOpen}
         motionPreset="slideInBottom"
+        isCentered
+        onClose={onClose}
       >
         <ModalOverlay />
         <ModalContent mx={4}>
@@ -93,15 +93,15 @@ function DeleteAccountButton() {
           </ModalBody>
           <ModalFooter>
             <Button
-              maxW={80}
-              mr={3}
-              isLoading={deletingAccount}
-              onClick={async () => {
-                handleDelete();
-              }}
               _hover={{
                 bg: "red.500",
                 color: "black",
+              }}
+              isLoading={deletingAccount}
+              maxW={80}
+              mr={3}
+              onClick={async () => {
+                handleDelete();
               }}
             >
               Confirm Deletion

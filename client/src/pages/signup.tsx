@@ -25,16 +25,16 @@ function SignUp() {
         <Head>
           <title>Sign up • GymPal</title>
           <meta
-            name="description"
             content="GymPal - Your Ultimate Fitness Tracking Companion. Achieve your fitness goals with GymPal, the all-in-one platform to track and visualize your gym progress. Connect with friends, view their profiles, and compare workout statistics."
+            name="description"
           />
         </Head>
         <Wrapper variant="small">
           <Formik
             initialValues={{
-              username: "",
               password: "",
               privateAccount: false,
+              username: "",
             }}
             onSubmit={async (values, { setErrors }) => {
               const response = await register({
@@ -51,19 +51,19 @@ function SignUp() {
           >
             {({ values, isSubmitting, setFieldValue }) => (
               <Form>
-                <InputField name="username" label="Username" />
+                <InputField label="Username" name="username" />
                 <Box mt={4}>
                   <InputField
-                    type="password"
-                    name="password"
                     label="Password"
+                    name="password"
+                    type="password"
                   />
                 </Box>
-                <Box gap={2} mt={4} flexDirection="column" display="flex">
+                <Box display="flex" flexDirection="column" gap={2} mt={4}>
                   <Checkbox
-                    name="privateAccount"
-                    defaultChecked={false}
                     checked={values.privateAccount}
+                    defaultChecked={false}
+                    name="privateAccount"
                     onChange={(e) => {
                       setFieldValue("privateAccount", e.target.checked);
                     }}
@@ -71,17 +71,17 @@ function SignUp() {
                     Private Account
                   </Checkbox>
                   <Button
-                    type="submit"
-                    isLoading={isSubmitting}
                     isDisabled={!values.password || !values.username}
+                    isLoading={isSubmitting}
+                    type="submit"
                   >
                     Sign Up
                   </Button>
                   <Box display="flex" gap={1}>
                     <Text>Already have an account? </Text>
                     <Text
-                      color={colorMode === "dark" ? "blue.400" : "blue.600"}
                       _hover={{ textDecoration: "underline" }}
+                      color={colorMode === "dark" ? "blue.400" : "blue.600"}
                     >
                       <Link
                         color={colorMode === "dark" ? "blue.400" : "blue.600"}

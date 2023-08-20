@@ -6,10 +6,10 @@ export const DarkModeSwitch = () => {
   const isDark = colorMode === "dark";
   return (
     <IconButton
-      icon={isDark ? <SunIcon /> : <MoonIcon />}
       aria-label="Toggle Theme"
-      onClick={toggleColorMode}
+      icon={isDark ? <SunIcon /> : <MoonIcon />}
       size="sm"
+      onClick={toggleColorMode}
     />
   );
 };

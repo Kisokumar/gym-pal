@@ -4,36 +4,36 @@ import "@fontsource/open-sans/700.css";
 import { extendTheme } from "@chakra-ui/react";
 
 const fonts = {
-  mono: `'Menlo', monospace`,
-  heading: `'Open Sans', sans-serif`,
   body: `'Raleway', sans-serif`,
+  heading: `'Open Sans', sans-serif`,
+  mono: `'Menlo', monospace`,
 };
 
 const breakpoints = {
-  sm: "40em",
-  md: "52em",
   lg: "64em",
+  md: "52em",
+  sm: "40em",
   xl: "80em",
 };
 
 const theme = extendTheme({
+  breakpoints,
   colors: {
+    black: "#16161D",
     brand: {
       text: {
-        default: "#16161D",
         _dark: "#ade3b8",
+        default: "#16161D",
       },
     },
-    black: "#16161D",
   },
-  radii: {
-    button: "12px",
-  },
-  fonts,
-  breakpoints,
   config: {
     initialColorMode: "dark",
     useSystemColorMode: true,
+  },
+  fonts,
+  radii: {
+    button: "12px",
   },
   // todo: fix styling, disabling light mode for now
   styles: {

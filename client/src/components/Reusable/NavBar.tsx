@@ -32,10 +32,10 @@ function NavBar() {
 
   const loginButton = (
     <Button
-      type="submit"
+      flex={1}
       fontSize="sm"
       size="sm"
-      flex={1}
+      type="submit"
       onClick={() => {
         router.push("/login");
       }}
@@ -46,9 +46,9 @@ function NavBar() {
 
   const signUpButton = (
     <Button
+      flex={1}
       fontSize="sm"
       size="sm"
-      flex={1}
       onClick={() => {
         router.push("/signup");
       }}
@@ -77,15 +77,15 @@ function NavBar() {
 
   return (
     <Box
-      bg={colorMode === "light" ? "gray.600" : "gray.900"}
-      h={14}
-      display="flex"
       alignItems="center"
+      bg={colorMode === "light" ? "gray.600" : "gray.900"}
+      display="flex"
+      h={14}
       justifyContent="space-between"
     >
-      <Box ml={4} gap={2} display="flex" alignItems="center">
+      <Box alignItems="center" display="flex" gap={2} ml={4}>
         <Link href="/">
-          <Text fontSize="xl" color="white">
+          <Text color="white" fontSize="xl">
             GymPal
           </Text>
         </Link>
@@ -93,10 +93,10 @@ function NavBar() {
           <Popover trigger="hover">
             <PopoverTrigger>
               <Text
-                fontSize="xl"
+                alignItems="center"
                 color="white"
                 display="flex"
-                alignItems="center"
+                fontSize="xl"
                 gap={2}
               >
                 <MdConstruction />
@@ -109,9 +109,9 @@ function NavBar() {
               <PopoverBody>
                 Please report any bugs or request features{" "}
                 <Link
-                  target="_blank"
                   color={colorMode === "light" ? "blue.600" : "blue.200"}
                   href="https://github.com/kisokumar/gym-pal/issues"
+                  target="_blank"
                 >
                   here.
                 </Link>
@@ -120,14 +120,14 @@ function NavBar() {
           </Popover>
         </Box>
       </Box>
-      <Box mr={4} gap={2} display="flex" alignItems="center">
+      <Box alignItems="center" display="flex" gap={2} mr={4}>
         {!fetching && (
           <>
             {!data?.me ? (
               <>{navButtons}</>
             ) : (
-              <Box gap={2} display="flex" alignItems="center">
-                <Box display={["none", "none", "flex"]} alignItems="center">
+              <Box alignItems="center" display="flex" gap={2}>
+                <Box alignItems="center" display={["none", "none", "flex"]}>
                   <Popover trigger="hover">
                     <PopoverTrigger>
                       <Box mx={2}>
@@ -161,7 +161,7 @@ function NavBar() {
                     </PopoverContent>
                   </Popover>
                   <Link href="profile">
-                    <Text fontSize="xl" color="white" noOfLines={1}>
+                    <Text color="white" fontSize="xl" noOfLines={1}>
                       Hey {data?.me?.username}!
                     </Text>
                   </Link>{" "}
@@ -171,8 +171,8 @@ function NavBar() {
                   <Button
                     fontSize="sm"
                     fontWeight="medium"
-                    size="sm"
                     isLoading={logoutFetching}
+                    size="sm"
                     onClick={() => {
                       router.push("/profile");
                     }}
@@ -182,9 +182,9 @@ function NavBar() {
                 )}
                 <Button
                   fontSize="sm"
-                  size="sm"
                   fontWeight="medium"
                   isLoading={logoutFetching}
+                  size="sm"
                   onClick={() => {
                     logout({});
                     router.push("/login");

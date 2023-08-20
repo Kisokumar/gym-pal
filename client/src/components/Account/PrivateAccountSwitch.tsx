@@ -27,11 +27,11 @@ function PrivateAccountSwitch() {
     >
       <Flex>
         {privateAccount ? (
-          <Text display="flex" alignItems="center">
+          <Text alignItems="center" display="flex">
             Private Account
           </Text>
         ) : (
-          <Text display="flex" alignItems="center">
+          <Text alignItems="center" display="flex">
             Public Account
           </Text>
         )}
@@ -46,11 +46,11 @@ function PrivateAccountSwitch() {
           }}
         />
         {privateAccount ? (
-          <Text display="flex" alignItems="center">
+          <Text alignItems="center" display="flex">
             <CiLock color="white" />
           </Text>
         ) : (
-          <Text display="flex" alignItems="center">
+          <Text alignItems="center" display="flex">
             <BsGlobeAmericas color="white" />
           </Text>
         )}

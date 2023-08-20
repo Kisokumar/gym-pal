@@ -8,12 +8,12 @@ interface WrapperProps {
 export default function CentrePageWrapper({ children }: WrapperProps) {
   return (
     <Box
-      pb={20}
-      justifyContent="center"
       alignItems="center"
-      h="full"
-      justifyItems="center"
       display="flex"
+      h="full"
+      justifyContent="center"
+      justifyItems="center"
+      pb={20}
     >
       {children}
     </Box>

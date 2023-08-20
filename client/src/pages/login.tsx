@@ -25,13 +25,13 @@ function Login() {
         <Head>
           <title>Log In • Gympal</title>
           <meta
-            name="description"
             content="GymPal - Your Ultimate Fitness Tracking Companion. Achieve your fitness goals with GymPal, the all-in-one platform to track and visualize your gym progress. Connect with friends, view their profiles, and compare workout statistics."
+            name="description"
           />
         </Head>
         <Wrapper variant="small">
           <Formik
-            initialValues={{ username: "", password: "" }}
+            initialValues={{ password: "", username: "" }}
             onSubmit={async (values, { setErrors }) => {
               const response = await login({ options: values });
               const errors = response.data?.login.errors;
@@ -45,20 +45,20 @@ function Login() {
           >
             {({ values, isSubmitting }) => (
               <Form>
-                <InputField name="username" label="Username" />
+                <InputField label="Username" name="username" />
                 <Box mt={4}>
                   <InputField
-                    type="password"
-                    name="password"
                     label="Password"
+                    name="password"
+                    type="password"
                   />
                 </Box>
-                <Box mt={4} display="flex">
+                <Box display="flex" mt={4}>
                   <Button
-                    type="submit"
-                    isLoading={isSubmitting}
                     flex={1}
                     isDisabled={!values.password || !values.username}
+                    isLoading={isSubmitting}
+                    type="submit"
                   >
                     Log In
                   </Button>
@@ -66,8 +66,8 @@ function Login() {
                 <Box display="flex" gap={1}>
                   <Text>Don't have an account?</Text>
                   <Text
-                    color={colorMode === "dark" ? "blue.400" : "blue.600"}
                     _hover={{ textDecoration: "underline" }}
+                    color={colorMode === "dark" ? "blue.400" : "blue.600"}
                   >
                     <Link
                       color={colorMode === "dark" ? "blue.400" : "blue.600"}

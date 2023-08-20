@@ -17,23 +17,23 @@ const Custom404Page = () => {
       <Head>
         <title>Page not found • GymPal</title>
         <meta
-          name="description"
           content="GymPal - Your Ultimate Fitness Tracking Companion. Achieve your fitness goals with GymPal, the all-in-one platform to track and visualize your gym progress. Connect with friends, view their profiles, and compare workout statistics."
+          name="description"
         />
       </Head>
       <CentrePageWrapper>
         <Wrapper variant="small">
           <Card overflow="hidden" variant="outline">
             <Box display="flex" flexDirection="column" m={4}>
-              <Heading size="md" display="flex" gap={2} alignItems="center">
+              <Heading alignItems="center" display="flex" gap={2} size="md">
                 <BiError />
                 Error 404
               </Heading>
               <Text mt={4}>Oops! This page doesn't exist 😔</Text>
-              <Box mt={2} display="flex">
+              <Box display="flex" mt={2}>
                 <Button
-                  type="submit"
                   flex={1}
+                  type="submit"
                   onClick={() => {
                     router.push("/");
                   }}

@@ -26,15 +26,15 @@ function Login() {
         <>
           <Card overflow="hidden" variant="outline">
             <Box display="flex" flexDirection="column" m={4}>
-              <Heading size="md" display="flex" gap={2} alignItems="center">
+              <Heading alignItems="center" display="flex" gap={2} size="md">
                 <BiError />
                 Not Logged In
               </Heading>
               <Text mt={4}>Please log in to continue.</Text>
-              <Box my={2} display="flex">
+              <Box display="flex" my={2}>
                 <Button
-                  type="submit"
                   flex={1}
+                  type="submit"
                   onClick={() => {
                     router.push("/login");
                   }}

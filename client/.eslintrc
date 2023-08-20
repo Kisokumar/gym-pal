@@ -10,7 +10,17 @@
   ],
   "rules": {
     "no-console": 2,
-    "sort-keys-fix/sort-keys-fix": "warn",
+    "sort-keys-fix/sort-keys-fix": 2,
+    "react/jsx-sort-props": [
+      2,
+      {
+        "callbacksLast": true,
+        "shorthandFirst": false,
+        "shorthandLast": true,
+        "ignoreCase": true,
+        "noSortAlphabetically": false
+      }
+    ],
     "@typescript-eslint/no-unused-vars": [
       "error",
       {
