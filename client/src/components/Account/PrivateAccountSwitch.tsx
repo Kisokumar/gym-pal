@@ -1,4 +1,4 @@
-import { Flex, Switch } from "@chakra-ui/react";
+import { Flex, Switch, useToast } from "@chakra-ui/react";
 import {
   useChangePrivacyMutation,
   useProfileQuery,
@@ -11,12 +11,85 @@ import { createUrqlClient } from "../../utils/createUrqlClient";
 import { withUrqlClient } from "next-urql";
 
 function PrivateAccountSwitch() {
+  const toast = useToast();
   const [{ data: userData, fetching: userFetching }] = useProfileQuery();
   const [{ fetching: changingPrivacy }, changePrivacy] =
     useChangePrivacyMutation();
 
   const privateAccount = userData?.me?.privateAccount;
   const disabledState = userFetching || changingPrivacy;
+
+  const renderPrivateIcon = (isPrivate: boolean) => (
+    <Text alignItems="center" display="flex">
+      {isPrivate ? <CiLock color="white" /> : <BsGlobeAmericas color="white" />}
+    </Text>
+  );
+
+  const renderToastTitle = (accountStatus: string) => (
+    <Text>Your account is now {accountStatus}.</Text>
+  );
+
+  const handleChangePrivacy = async (value: boolean) => {
+    try {
+      const changePrivacyResult = await changePrivacy({ isPrivate: value });
+      if (
+        changePrivacyResult.data?.changePrivacy.user?.privateAccount === value
+      ) {
+        toast({
+          containerStyle: {
+            marginBottom: 10,
+          },
+          duration: 2000,
+          icon: renderPrivateIcon(value),
+          isClosable: true,
+          position: "bottom-right",
+          status: "success",
+          title: renderToastTitle(value ? "private" : "public"),
+          variant: "left-accent",
+        });
+      } else {
+        toast({
+          containerStyle: {
+            marginBottom: 10,
+          },
+          duration: 2000,
+          isClosable: true,
+          position: "bottom-right",
+          status: "error",
+          title:
+            "Sorry, there was an error while changing the privacy on your account.",
+          variant: "left-accent",
+        });
+      }
+      if (changePrivacyResult.error) {
+        toast({
+          containerStyle: {
+            marginBottom: 10,
+          },
+          duration: 2000,
+          isClosable: true,
+          position: "bottom-right",
+          status: "error",
+          title:
+            "Sorry, there was an error while changing the privacy on your account.",
+          variant: "left-accent",
+        });
+      }
+    } catch (error) {
+      toast({
+        containerStyle: {
+          marginBottom: 10,
+        },
+        duration: 5000,
+        isClosable: true,
+        position: "bottom-right",
+        status: "error",
+        title:
+          "Sorry, there was an error while changing the privacy on your account.",
+        variant: "left-accent",
+      });
+    }
+  };
 
   return (
     <Flex
@@ -42,18 +115,10 @@ function PrivateAccountSwitch() {
           isChecked={privateAccount}
           onChange={(state) => {
             const value = state.currentTarget.checked;
-            changePrivacy({ isPrivate: value });
+            handleChangePrivacy(value);
           }}
         />
-        {privateAccount ? (
-          <Text alignItems="center" display="flex">
-            <CiLock color="white" />
-          </Text>
-        ) : (
-          <Text alignItems="center" display="flex">
-            <BsGlobeAmericas color="white" />
-          </Text>
-        )}
+        {privateAccount != null && renderPrivateIcon(privateAccount)}
       </Flex>
     </Flex>
   );

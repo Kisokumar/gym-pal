@@ -207,11 +207,11 @@ function UserSearch({ placeholder }: UserSearchProps): JSX.Element {
                                 >
                                   {user.privateAccount ? (
                                     <Text alignItems="center" display="flex">
-                                      <CiLock color="white" />
+                                      <CiLock />
                                     </Text>
                                   ) : (
                                     <Text alignItems="center" display="flex">
-                                      <BsGlobeAmericas color="white" />
+                                      <BsGlobeAmericas />
                                     </Text>
                                   )}
                                   <Text ml={2}>{user.username}</Text>

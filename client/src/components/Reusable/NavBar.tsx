@@ -10,7 +10,11 @@ import {
   PopoverTrigger,
   useColorMode,
 } from "@chakra-ui/react";
-import { useLogoutMutation, useMeQuery } from "../../generated/graphql";
+import {
+  useLogoutMutation,
+  useMeQuery,
+  useServerConnectionQuery,
+} from "../../generated/graphql";
 
 import { BsGlobeAmericas } from "react-icons/bs";
 import { CiLock } from "react-icons/ci";
@@ -18,6 +22,7 @@ import { DarkModeSwitch } from "./DarkModeSwitch";
 import Link from "next/link";
 import { MdConstruction } from "react-icons/md";
 import React from "react";
+import StatusIcon from "../Navbar/StatusIcon";
 import { Text } from "@chakra-ui/react";
 import { createUrqlClient } from "../../utils/createUrqlClient";
 import { useRouter } from "next/router";
@@ -29,6 +34,9 @@ function NavBar() {
 
   const [{ fetching: logoutFetching }, logout] = useLogoutMutation();
   const [{ data, fetching }] = useMeQuery();
+
+  const [{ data: serverConnection, fetching: fetchingServerConnection }] =
+    useServerConnectionQuery();
 
   const loginButton = (
     <Button
@@ -92,16 +100,24 @@ function NavBar() {
         <Box display={["none", "none", "flex"]}>
           <Popover trigger="hover">
             <PopoverTrigger>
-              <Text
-                alignItems="center"
-                color="white"
-                display="flex"
-                fontSize="xl"
-                gap={2}
-              >
-                <MdConstruction />
-                beta
-              </Text>
+              <Flex alignItems="center" gap={2}>
+                <Text
+                  alignItems="center"
+                  color="white"
+                  display="flex"
+                  fontSize="xl"
+                  gap={2}
+                >
+                  <MdConstruction />
+                  beta
+                </Text>
+                {!fetchingServerConnection && (
+                  <StatusIcon
+                    pageProps={undefined}
+                    status={serverConnection?.serverConnection}
+                  />
+                )}
+              </Flex>
             </PopoverTrigger>
             <PopoverContent ml={4}>
               <PopoverArrow />
