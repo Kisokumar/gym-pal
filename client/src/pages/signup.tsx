@@ -1,16 +1,20 @@
 import { Box, Button, Checkbox, useColorMode } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
+import {
+  useRegisterMutation,
+  useServerConnectionQuery,
+} from "../generated/graphql";
 
 import CentrePageWrapper from "../components/Reusable/CentrePageWrapper";
 import Head from "next/head";
 import InputField from "../components/Reusable/InputField";
 import Link from "next/link";
+import NotConnected from "../components/Reusable/NotConnected";
 import React from "react";
 import { Text } from "@chakra-ui/react";
 import Wrapper from "../components/Reusable/Wrapper";
 import { createUrqlClient } from "../utils/createUrqlClient";
 import { toErrorMap } from "../utils/toErrorMap";
-import { useRegisterMutation } from "../generated/graphql";
 import { useRouter } from "next/router";
 import { withUrqlClient } from "next-urql";
 
@@ -18,6 +22,11 @@ function SignUp() {
   const [, register] = useRegisterMutation();
   const { colorMode } = useColorMode();
   const router = useRouter();
+  const [{ error: serverError }] = useServerConnectionQuery();
+
+  if (serverError) {
+    return <NotConnected pageProps={undefined} />;
+  }
 
   return (
     <CentrePageWrapper>

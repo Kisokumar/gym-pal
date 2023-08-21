@@ -1,23 +1,33 @@
 import { Box, Button, useColorMode } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
+import {
+  useLoginMutation,
+  useMeQuery,
+  useServerConnectionQuery,
+} from "../generated/graphql";
 
 import CentrePageWrapper from "../components/Reusable/CentrePageWrapper";
 import Head from "next/head";
 import InputField from "../components/Reusable/InputField";
 import Link from "next/link";
+import NotConnected from "../components/Reusable/NotConnected";
 import React from "react";
 import { Text } from "@chakra-ui/react";
 import Wrapper from "../components/Reusable/Wrapper";
 import { createUrqlClient } from "../utils/createUrqlClient";
 import { toErrorMap } from "../utils/toErrorMap";
-import { useLoginMutation } from "../generated/graphql";
 import { useRouter } from "next/router";
 import { withUrqlClient } from "next-urql";
 
 function Login() {
   const [, login] = useLoginMutation();
+  const [{ error: serverError }] = useServerConnectionQuery();
   const { colorMode } = useColorMode();
   const router = useRouter();
+
+  if (serverError) {
+    return <NotConnected pageProps={undefined} />;
+  }
 
   return (
     <CentrePageWrapper>

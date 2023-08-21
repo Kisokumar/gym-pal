@@ -1,10 +1,15 @@
 import { Flex, Spinner, Text, useColorModeValue } from "@chakra-ui/react";
-import { useProfileQuery, useWorkoutSessionsQuery } from "../generated/graphql";
+import {
+  useProfileQuery,
+  useServerConnectionQuery,
+  useWorkoutSessionsQuery,
+} from "../generated/graphql";
 
 import CentrePageWrapper from "../components/Reusable/CentrePageWrapper";
 import DeleteAccountButton from "../components/Account/DeleteAccountButton";
 import Head from "next/head";
 import LoggedOutPage from "../components/Reusable/LoggedOutPage";
+import NotConnected from "../components/Reusable/NotConnected";
 import PrivateAccountSwitch from "../components/Account/PrivateAccountSwitch";
 import React from "react";
 import Wrapper from "../components/Reusable/Wrapper";
@@ -15,8 +20,13 @@ import { withUrqlClient } from "next-urql";
 function Profile() {
   const [{ data: userData, fetching }] = useProfileQuery();
   const [{ data: workoutSessionsData }] = useWorkoutSessionsQuery();
+  const [{ error: serverError }] = useServerConnectionQuery();
 
   const sessions = workoutSessionsData?.WorkoutSessions;
+
+  if (serverError) {
+    return <NotConnected pageProps={undefined} />;
+  }
 
   if (!userData?.me && !fetching) {
     return (

@@ -36,7 +36,7 @@ function NavBar() {
   const [{ data, fetching }] = useMeQuery();
 
   const [{ data: serverConnection, fetching: fetchingServerConnection }] =
-    useServerConnectionQuery();
+    useServerConnectionQuery({ requestPolicy: "network-only" });
 
   const loginButton = (
     <Button
@@ -97,7 +97,7 @@ function NavBar() {
             GymPal
           </Text>
         </Link>
-        <Box display={["none", "none", "flex"]}>
+        <Box alignItems="center" display={["none", "none", "flex"]} gap={2}>
           <Popover trigger="hover">
             <PopoverTrigger>
               <Flex alignItems="center" gap={2}>
@@ -111,12 +111,6 @@ function NavBar() {
                   <MdConstruction />
                   beta
                 </Text>
-                {!fetchingServerConnection && (
-                  <StatusIcon
-                    pageProps={undefined}
-                    status={serverConnection?.serverConnection}
-                  />
-                )}
               </Flex>
             </PopoverTrigger>
             <PopoverContent ml={4}>
@@ -133,6 +127,12 @@ function NavBar() {
                 </Link>
               </PopoverBody>
             </PopoverContent>
+            {!fetchingServerConnection && (
+              <StatusIcon
+                pageProps={undefined}
+                status={serverConnection?.serverConnection}
+              />
+            )}
           </Popover>
         </Box>
       </Box>

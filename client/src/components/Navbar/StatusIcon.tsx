@@ -1,3 +1,4 @@
+import { Tooltip } from "@chakra-ui/react";
 import { createUrqlClient } from "../../utils/createUrqlClient";
 import { motion } from "framer-motion";
 import { withUrqlClient } from "next-urql";
@@ -8,7 +9,13 @@ type Props = {
 
 function StatusIcon({ status }: Props) {
   return (
-    <>
+    <Tooltip
+      label={
+        status !== undefined
+          ? "Connected to server!"
+          : "No connection to server!"
+      }
+    >
       <motion.div
         animate={{ opacity: 1, scale: 1 }}
         initial={{ opacity: 0.5, scale: 0.9 }}
@@ -42,7 +49,7 @@ function StatusIcon({ status }: Props) {
           }}
         />
       </motion.div>
-    </>
+    </Tooltip>
   );
 }
 
