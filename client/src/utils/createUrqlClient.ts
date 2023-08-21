@@ -107,6 +107,21 @@ export const createUrqlClient = (ssrExchange: any) => ({
     ssrExchange,
     fetchExchange,
   ],
+  fetch: async (url: RequestInfo | URL, options: RequestInit | undefined) => {
+    const timeoutPromise = new Promise<Response>(
+      (_, reject) =>
+        setTimeout(() => reject(new Error("Request timed out")), 10000) // 10 seconds timeout
+    );
+
+    const response = await Promise.race([fetch(url, options), timeoutPromise]);
+
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+
+    return response;
+  },
+
   fetchOptions: {
     credentials: "include" as const,
   },

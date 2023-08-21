@@ -16,7 +16,7 @@ import { createUrqlClient } from "../../utils/createUrqlClient";
 import { useRouter } from "next/router";
 import { withUrqlClient } from "next-urql";
 
-function Login() {
+function LoggedOutPage() {
   const router = useRouter();
   const { colorMode } = useColorMode();
 
@@ -60,4 +60,4 @@ function Login() {
     </CentrePageWrapper>
   );
 }
-export default withUrqlClient(createUrqlClient, { ssr: true })(Login);
+export default withUrqlClient(createUrqlClient, { ssr: true })(LoggedOutPage);
