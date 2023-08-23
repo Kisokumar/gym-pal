@@ -10,6 +10,7 @@ import {
   PopoverTrigger,
   useColorMode,
 } from "@chakra-ui/react";
+import React, { useEffect } from "react";
 import {
   useLogoutMutation,
   useMeQuery,
@@ -21,8 +22,7 @@ import { CiLock } from "react-icons/ci";
 import { DarkModeSwitch } from "./DarkModeSwitch";
 import Link from "next/link";
 import { MdConstruction } from "react-icons/md";
-import React from "react";
-import StatusIcon from "../Navbar/StatusIcon";
+import StatusIcon from "./StatusIcon";
 import { Text } from "@chakra-ui/react";
 import { createUrqlClient } from "../../utils/createUrqlClient";
 import { useRouter } from "next/router";
@@ -35,8 +35,20 @@ function NavBar() {
   const [{ fetching: logoutFetching }, logout] = useLogoutMutation();
   const [{ data, fetching }] = useMeQuery();
 
-  const [{ data: serverConnection, fetching: fetchingServerConnection }] =
-    useServerConnectionQuery({ requestPolicy: "network-only" });
+  const [
+    {
+      data: serverConnection,
+      fetching: fetchingServerConnection,
+      stale: staleStatus,
+    },
+    getConnection,
+  ] = useServerConnectionQuery({ requestPolicy: "cache-and-network" });
+
+  useEffect(() => {
+    if (staleStatus) {
+      getConnection();
+    }
+  }, [getConnection, staleStatus]);
 
   const loginButton = (
     <Button
@@ -119,7 +131,7 @@ function NavBar() {
               <PopoverBody>
                 Please report any bugs or request features{" "}
                 <Link
-                  color={colorMode === "light" ? "blue.600" : "blue.200"}
+                  color={colorMode === "light" ? "blue.300" : "blue.700"}
                   href="https://github.com/kisokumar/gym-pal/issues"
                   target="_blank"
                 >

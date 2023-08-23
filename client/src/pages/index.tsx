@@ -3,9 +3,10 @@ import { useMeQuery, useWorkoutSessionsQuery } from "../generated/graphql";
 
 import CentrePageWrapper from "../components/Reusable/CentrePageWrapper";
 import Search from "../components/Search/Search";
-import WelcomePage from "../components/Reusable/WelcomePage";
+import WelcomePage from "../components/StatePages/WelcomePage";
 import { createUrqlClient } from "../utils/createUrqlClient";
 import { withUrqlClient } from "next-urql";
+import React from "react";
 
 const Index = () => {
   const [{ data: workoutSessionsData, fetching: workoutsFetching }] =

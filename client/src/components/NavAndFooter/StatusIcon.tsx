@@ -2,6 +2,7 @@ import { Tooltip } from "@chakra-ui/react";
 import { createUrqlClient } from "../../utils/createUrqlClient";
 import { motion } from "framer-motion";
 import { withUrqlClient } from "next-urql";
+import React from "react";
 
 type Props = {
   status: string;

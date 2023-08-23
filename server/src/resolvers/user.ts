@@ -141,7 +141,9 @@ export class UserResolver {
       if (passwordErrors) return passwordErrors;
     }
 
-    const hashedPassword = await argon2.hash(options.password);
+    const hashedPassword = await argon2.hash(options.password, {
+      saltLength: 12,
+    });
 
     let user;
     try {

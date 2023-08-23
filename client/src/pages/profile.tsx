@@ -8,8 +8,8 @@ import {
 import CentrePageWrapper from "../components/Reusable/CentrePageWrapper";
 import DeleteAccountButton from "../components/Account/DeleteAccountButton";
 import Head from "next/head";
-import LoggedOutPage from "../components/Reusable/LoggedOutPage";
-import NotConnected from "../components/Reusable/NotConnected";
+import LoggedOutPage from "../components/StatePages/LoggedOutPage";
+import NotConnected from "../components/StatePages/NotConnected";
 import PrivateAccountSwitch from "../components/Account/PrivateAccountSwitch";
 import React from "react";
 import Wrapper from "../components/Reusable/Wrapper";

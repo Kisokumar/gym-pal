@@ -1,11 +1,11 @@
 import { Box, Button, Card, Text } from "@chakra-ui/react";
 
-import CentrePageWrapper from "./CentrePageWrapper";
-import React from "react";
-import Wrapper from "./Wrapper";
+import CentrePageWrapper from "../Reusable/CentrePageWrapper";
+import Wrapper from "../Reusable/Wrapper";
 import { createUrqlClient } from "../../utils/createUrqlClient";
 import { useRouter } from "next/router";
 import { withUrqlClient } from "next-urql";
+import React from "react";
 
 function Login() {
   const router = useRouter();

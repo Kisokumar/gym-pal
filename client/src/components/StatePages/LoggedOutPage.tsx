@@ -8,10 +8,10 @@ import {
 } from "@chakra-ui/react";
 
 import { BiError } from "react-icons/bi";
-import CentrePageWrapper from "./CentrePageWrapper";
+import CentrePageWrapper from "../Reusable/CentrePageWrapper";
 import React from "react";
 import { Text } from "@chakra-ui/react";
-import Wrapper from "./Wrapper";
+import Wrapper from "../Reusable/Wrapper";
 import { createUrqlClient } from "../../utils/createUrqlClient";
 import { useRouter } from "next/router";
 import { withUrqlClient } from "next-urql";
