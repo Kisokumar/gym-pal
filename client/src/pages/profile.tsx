@@ -3,18 +3,18 @@ import {
   useProfileQuery,
   useServerConnectionQuery,
   useWorkoutSessionsQuery,
-} from "../generated/graphql";
+} from "@src/generated/graphql";
 
-import CentrePageWrapper from "../components/Reusable/CentrePageWrapper";
-import DeleteAccountButton from "../components/Account/DeleteAccountButton";
+import CentrePageWrapper from "@src/components/Reusable/CentrePageWrapper";
+import DeleteAccountButton from "@src/components/Account/DeleteAccountButton";
 import Head from "next/head";
-import LoggedOutPage from "../components/StatePages/LoggedOutPage";
-import NotConnected from "../components/StatePages/NotConnected";
-import PrivateAccountSwitch from "../components/Account/PrivateAccountSwitch";
+import LoggedOutPage from "@src/components/StatePages/LoggedOutPage";
+import NotConnected from "@src/components/StatePages/NotConnected";
+import PrivateAccountSwitch from "@src/components/Account/PrivateAccountSwitch";
 import React from "react";
-import Wrapper from "../components/Reusable/Wrapper";
-import { createUrqlClient } from "../utils/createUrqlClient";
-import unixToDate from "../utils/unixToDate";
+import Wrapper from "@src/components/Reusable/Wrapper";
+import { createUrqlClient } from "@src/utils/createUrqlClient";
+import unixToDate from "@src/utils/unixToDate";
 import { withUrqlClient } from "next-urql";
 
 function Profile() {

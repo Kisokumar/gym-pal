@@ -1,10 +1,10 @@
 import { Flex, Spinner } from "@chakra-ui/react";
-import { useMeQuery, useWorkoutSessionsQuery } from "../generated/graphql";
+import { useMeQuery, useWorkoutSessionsQuery } from "@src/generated/graphql";
 
-import CentrePageWrapper from "../components/Reusable/CentrePageWrapper";
-import Search from "../components/Search/Search";
-import WelcomePage from "../components/StatePages/WelcomePage";
-import { createUrqlClient } from "../utils/createUrqlClient";
+import CentrePageWrapper from "@src/components/Reusable/CentrePageWrapper";
+import Search from "@src/components/Search/Search";
+import WelcomePage from "@src/components/StatePages/WelcomePage";
+import { createUrqlClient } from "@src/utils/createUrqlClient";
 import { withUrqlClient } from "next-urql";
 import React from "react";
 

@@ -12,8 +12,8 @@ import {
 } from "@chakra-ui/react";
 
 import { Text } from "@chakra-ui/react";
-import { createUrqlClient } from "../../utils/createUrqlClient";
-import { useDeleteAccountMutation } from "../../generated/graphql";
+import { createUrqlClient } from "@src/utils/createUrqlClient";
+import { useDeleteAccountMutation } from "@src/generated/graphql";
 import { useRouter } from "next/router";
 import { withUrqlClient } from "next-urql";
 

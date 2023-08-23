@@ -15,7 +15,7 @@ import {
   useLogoutMutation,
   useMeQuery,
   useServerConnectionQuery,
-} from "../../generated/graphql";
+} from "@src/generated/graphql";
 
 import { BsGlobeAmericas } from "react-icons/bs";
 import { CiLock } from "react-icons/ci";
@@ -24,7 +24,7 @@ import Link from "next/link";
 import { MdConstruction } from "react-icons/md";
 import StatusIcon from "./StatusIcon";
 import { Text } from "@chakra-ui/react";
-import { createUrqlClient } from "../../utils/createUrqlClient";
+import { createUrqlClient } from "@src/utils/createUrqlClient";
 import { useRouter } from "next/router";
 import { withUrqlClient } from "next-urql";
 

@@ -8,7 +8,7 @@ import {
   MeDocument,
   MeQuery,
   RegisterMutation,
-} from "../generated/graphql";
+} from "@src/generated/graphql";
 
 import { betterUpdateQuery } from "./betterUpdateQuery";
 import { cacheExchange } from "@urql/exchange-graphcache";

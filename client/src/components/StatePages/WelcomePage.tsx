@@ -2,7 +2,7 @@ import { Box, Button, Card, Text } from "@chakra-ui/react";
 
 import CentrePageWrapper from "../Reusable/CentrePageWrapper";
 import Wrapper from "../Reusable/Wrapper";
-import { createUrqlClient } from "../../utils/createUrqlClient";
+import { createUrqlClient } from "@src/utils/createUrqlClient";
 import { useRouter } from "next/router";
 import { withUrqlClient } from "next-urql";
 import React from "react";

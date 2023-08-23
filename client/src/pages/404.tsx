@@ -1,11 +1,11 @@
 import { Box, Button, Card, Heading } from "@chakra-ui/react";
 
 import { BiError } from "react-icons/bi";
-import CentrePageWrapper from "../components/Reusable/CentrePageWrapper";
+import CentrePageWrapper from "@src/components/Reusable/CentrePageWrapper";
 import Head from "next/head";
 import { Text } from "@chakra-ui/react";
-import Wrapper from "../components/Reusable/Wrapper";
-import { createUrqlClient } from "../utils/createUrqlClient";
+import Wrapper from "@src/components/Reusable/Wrapper";
+import { createUrqlClient } from "@src/utils/createUrqlClient";
 import { useRouter } from "next/router";
 import { withUrqlClient } from "next-urql";
 

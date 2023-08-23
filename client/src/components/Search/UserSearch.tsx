@@ -23,8 +23,8 @@ import ErrorCard from "../Reusable/ErrorCard";
 import Link from "next/link";
 import ShowConditionally from "../Reusable/ShowConditionally";
 import { Text } from "@chakra-ui/react";
-import { createUrqlClient } from "../../utils/createUrqlClient";
-import { useUserSearchQuery } from "../../generated/graphql";
+import { createUrqlClient } from "@src/utils/createUrqlClient";
+import { useUserSearchQuery } from "@src/generated/graphql";
 import { withUrqlClient } from "next-urql";
 
 type UserSearchProps = {

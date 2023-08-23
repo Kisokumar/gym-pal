@@ -2,12 +2,12 @@ import { Flex, Switch, useToast } from "@chakra-ui/react";
 import {
   useChangePrivacyMutation,
   useProfileQuery,
-} from "../../generated/graphql";
+} from "@src/generated/graphql";
 
 import { BsGlobeAmericas } from "react-icons/bs";
 import { CiLock } from "react-icons/ci";
 import { Text } from "@chakra-ui/react";
-import { createUrqlClient } from "../../utils/createUrqlClient";
+import { createUrqlClient } from "@src/utils/createUrqlClient";
 import { withUrqlClient } from "next-urql";
 
 function PrivateAccountSwitch() {

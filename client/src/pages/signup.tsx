@@ -3,17 +3,17 @@ import { Form, Formik } from "formik";
 import {
   useRegisterMutation,
   useServerConnectionQuery,
-} from "../generated/graphql";
+} from "@src/generated/graphql";
 
-import CentrePageWrapper from "../components/Reusable/CentrePageWrapper";
+import CentrePageWrapper from "@src/components/Reusable/CentrePageWrapper";
 import Head from "next/head";
-import InputField from "../components/Reusable/InputField";
+import InputField from "@src/components/Reusable/InputField";
 import Link from "next/link";
-import NotConnected from "../components/StatePages/NotConnected";
+import NotConnected from "@src/components/StatePages/NotConnected";
 import { Text } from "@chakra-ui/react";
-import Wrapper from "../components/Reusable/Wrapper";
-import { createUrqlClient } from "../utils/createUrqlClient";
-import { toErrorMap } from "../utils/toErrorMap";
+import Wrapper from "@src/components/Reusable/Wrapper";
+import { createUrqlClient } from "@src/utils/createUrqlClient";
+import { toErrorMap } from "@src/utils/toErrorMap";
 import { useRouter } from "next/router";
 import { withUrqlClient } from "next-urql";
 import React from "react";
