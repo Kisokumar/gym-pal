@@ -142,7 +142,7 @@ function UserSearch({ placeholder }: UserSearchProps): JSX.Element {
                   </InputGroup>
                   <Flex align={"center"}>
                     <IconButton
-                      aria-label="Search Stock"
+                      aria-label="Search GymPal"
                       colorScheme="gray"
                       icon={<SearchIcon />}
                       isDisabled={query === ""}

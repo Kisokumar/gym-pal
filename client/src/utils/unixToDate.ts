@@ -27,4 +27,6 @@ export default function unixToDate(
   if (unixTimestamp) {
     return format(date, dateFormat);
   }
+
+  return null;
 }

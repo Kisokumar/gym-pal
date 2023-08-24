@@ -6,18 +6,18 @@ import {
 } from "@src/generated/graphql";
 
 import CentrePageWrapper from "@src/components/Reusable/CentrePageWrapper";
-import DeleteAccountButton from "@src/components/Account/DeleteAccountButton";
+import DeleteAccountButton from "@src/components/ProfileSettings/DeleteAccountButton";
 import Head from "next/head";
 import LoggedOutPage from "@src/components/StatePages/LoggedOutPage";
 import NotConnected from "@src/components/StatePages/NotConnected";
-import PrivateAccountSwitch from "@src/components/Account/PrivateAccountSwitch";
+import PrivateAccountSwitch from "@src/components/ProfileSettings/PrivateAccountSwitch";
 import React from "react";
 import Wrapper from "@src/components/Reusable/Wrapper";
 import { createUrqlClient } from "@src/utils/createUrqlClient";
 import unixToDate from "@src/utils/unixToDate";
 import { withUrqlClient } from "next-urql";
 
-function Profile() {
+function Settings() {
   const [{ data: userData, fetching }] = useProfileQuery();
   const [{ data: workoutSessionsData }] = useWorkoutSessionsQuery();
   const [{ error: serverError }] = useServerConnectionQuery();
@@ -104,4 +104,4 @@ function Profile() {
   );
 }
 
-export default withUrqlClient(createUrqlClient)(Profile);
+export default withUrqlClient(createUrqlClient)(Settings);

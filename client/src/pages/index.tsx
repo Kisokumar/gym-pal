@@ -2,7 +2,6 @@ import { Flex, Spinner } from "@chakra-ui/react";
 import { useMeQuery, useWorkoutSessionsQuery } from "@src/generated/graphql";
 
 import CentrePageWrapper from "@src/components/Reusable/CentrePageWrapper";
-import Search from "@src/components/Search/Search";
 import WelcomePage from "@src/components/StatePages/WelcomePage";
 import { createUrqlClient } from "@src/utils/createUrqlClient";
 import { withUrqlClient } from "next-urql";
@@ -22,7 +21,6 @@ const Index = () => {
     return (
       <Flex justifyContent="center" pt={20}>
         <>
-          <Search />
           {!sessions ? (
             <p>Error</p>
           ) : (
