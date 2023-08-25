@@ -52,6 +52,8 @@ const main = async () => {
   );
 
   const oneWeek = 1000 * 60 * 60 * 24 * 7;
+  // const oneDay = 1000 * 60 * 60 * 24 * 1;
+  // const thirtySecs = 1000 * 30;
 
   app.use(
     session({
@@ -63,7 +65,7 @@ const main = async () => {
         secure: false,
         sameSite: "lax",
       },
-      secret: process.env.COOKIE_SECRET || "dqoiwjdosaijd",
+      secret: process.env.COOKIE_SECRET!,
       resave: false,
       saveUninitialized: true,
     })

@@ -51,6 +51,18 @@ class UserResponse {
 }
 
 @ObjectType()
+class ProfileResponse {
+  @Field(() => [FieldError], { nullable: true })
+  errors?: FieldError[];
+
+  @Field(() => User, { nullable: true })
+  user?: User;
+
+  @Field(() => Boolean, { nullable: true })
+  owner?: boolean;
+}
+
+@ObjectType()
 class UsersResponse {
   @Field(() => [FieldError], { nullable: true })
   errors?: FieldError[];
@@ -62,7 +74,7 @@ class UsersResponse {
 @Resolver()
 export class UserResolver {
   @Query(() => UsersResponse)
-  async users(
+  async searchUsers(
     @Arg("search") search: string,
     @Ctx() { em, req }: MyContext
   ): Promise<UsersResponse> {
@@ -85,9 +97,10 @@ export class UserResolver {
       .getRepository(User)
       .createQueryBuilder("user")
       .where("user.username ILIKE :search", { search: `%${search}%` })
-      .andWhere("user.id != :currentUser", { currentUser })
       .take(limit)
       .getMany();
+
+    // .andWhere("user.id != :currentUser", { currentUser })
 
     if (users.length < limit) {
       const remainder = limit - users.length;
@@ -110,6 +123,42 @@ export class UserResolver {
     }
 
     return { users };
+  }
+
+  @Query(() => ProfileResponse, { nullable: true })
+  async profile(
+    @Arg("username") username: string,
+    @Ctx() { req }: MyContext
+  ): Promise<ProfileResponse> {
+    if (!req.session.userId) {
+      return {
+        errors: [
+          {
+            field: "auth",
+            message: "User not authenticated.",
+          },
+        ],
+      };
+    }
+
+    const user = await User.findOne({ where: { username } });
+
+    const currentUserId = req.session.userId;
+
+    if (!user) {
+      return {
+        errors: [
+          {
+            field: "user",
+            message: "User not found.",
+          },
+        ],
+      };
+    }
+
+    const owner = user.id === currentUserId;
+
+    return { user, owner };
   }
 
   @Query(() => User, { nullable: true })

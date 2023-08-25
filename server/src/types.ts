@@ -6,7 +6,7 @@ import { EntityManager } from "typeorm";
 export type MyContext = {
   em: EntityManager;
   req: Request & {
-    session: Session & Partial<SessionData> & { userId: number | null };
+    session: Session & Partial<SessionData> & { userId: string | null };
   };
   res: Response;
 };

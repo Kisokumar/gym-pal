@@ -1,5 +1,8 @@
+import { v4 as uuidv4 } from "uuid";
+
 import {
   BaseEntity,
+  BeforeInsert,
   Column,
   CreateDateColumn,
   Entity,
@@ -15,8 +18,13 @@ import { WorkoutSession } from "./WorkoutSession";
 @Entity()
 export class User extends BaseEntity {
   @Field()
-  @PrimaryGeneratedColumn()
-  id!: number;
+  @PrimaryGeneratedColumn("uuid")
+  id!: string;
+
+  @BeforeInsert()
+  addId() {
+    this.id = uuidv4();
+  }
 
   @Field(() => String)
   @Column({ unique: true })
