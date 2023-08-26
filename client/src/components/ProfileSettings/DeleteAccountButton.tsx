@@ -68,7 +68,7 @@ function DeleteAccountButton() {
       });
     }
     onClose();
-    router.push("/login");
+    router.push("/signup");
   };
 
   return (
