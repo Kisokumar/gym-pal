@@ -33,6 +33,10 @@ export class User extends BaseEntity {
   @Column()
   password!: string;
 
+  @Field(() => String)
+  @Column({ unique: true })
+  email!: string;
+
   @Field(() => Boolean)
   @Column()
   privateAccount!: boolean;

@@ -82,8 +82,6 @@ function NavBar() {
             GymPal
           </Text>
         </Link>
-        {/* // Todo Nav usersearch */}
-
         {router.pathname !== "/search" && !fetching && meData?.me && (
           <NavUserSearch pageProps={undefined} />
         )}

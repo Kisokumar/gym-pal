@@ -41,6 +41,7 @@ function SignUp() {
         <Wrapper variant="small">
           <Formik
             initialValues={{
+              email: "",
               password: "",
               privateAccount: false,
               username: "",
@@ -60,7 +61,10 @@ function SignUp() {
           >
             {({ values, isSubmitting, setFieldValue }) => (
               <Form>
-                <InputField label="Username" name="username" />
+                <InputField label="Email" name="email" type="email" />
+                <Box mt={4}>
+                  <InputField label="Username" name="username" />
+                </Box>
                 <Box mt={4}>
                   <InputField
                     label="Password"

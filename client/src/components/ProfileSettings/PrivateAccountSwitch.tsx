@@ -98,11 +98,11 @@ function PrivateAccountSwitch() {
       <Flex>
         {privateAccount ? (
           <Text alignItems="center" display="flex">
-            Private Account
+            Private
           </Text>
         ) : (
           <Text alignItems="center" display="flex">
-            Public Account
+            Public
           </Text>
         )}
       </Flex>

@@ -107,6 +107,7 @@ export type QuerySearchUsersArgs = {
 export type User = {
   __typename?: 'User';
   createdAt: Scalars['String']['output'];
+  email: Scalars['String']['output'];
   hideConnections: Scalars['Boolean']['output'];
   id: Scalars['String']['output'];
   privateAccount: Scalars['Boolean']['output'];
@@ -126,6 +127,7 @@ export type UsernamePasswordInput = {
 };
 
 export type UsernamePasswordRegisterInput = {
+  email: Scalars['String']['input'];
   password: Scalars['String']['input'];
   privateAccount: Scalars['Boolean']['input'];
   username: Scalars['String']['input'];
@@ -141,9 +143,8 @@ export type WorkoutSession = {
   __typename?: 'WorkoutSession';
   createdAt: Scalars['String']['output'];
   creator: User;
-  creatorId: Scalars['String']['output'];
+  creatorId: Scalars['Float']['output'];
   id: Scalars['Float']['output'];
-  points: Scalars['Float']['output'];
   sessionEndTime: Scalars['String']['output'];
   sessionStartTime: Scalars['String']['output'];
   sessionType: Scalars['String']['output'];
@@ -157,7 +158,7 @@ export type ChangePrivacyMutationVariables = Exact<{
 }>;
 
 
-export type ChangePrivacyMutation = { __typename?: 'Mutation', changePrivacy: { __typename?: 'UserResponse', errors?: Array<{ __typename?: 'FieldError', field: string, message: string }> | null, user?: { __typename?: 'User', username: string, privateAccount: boolean, createdAt: string } | null } };
+export type ChangePrivacyMutation = { __typename?: 'Mutation', changePrivacy: { __typename?: 'UserResponse', errors?: Array<{ __typename?: 'FieldError', field: string, message: string }> | null, user?: { __typename?: 'User', email: string, username: string, privateAccount: boolean, createdAt: string } | null } };
 
 export type DeleteAccountMutationVariables = Exact<{ [key: string]: never; }>;
 
@@ -169,7 +170,7 @@ export type LoginMutationVariables = Exact<{
 }>;
 
 
-export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'UserResponse', errors?: Array<{ __typename?: 'FieldError', field: string, message: string }> | null, user?: { __typename?: 'User', username: string, privateAccount: boolean, createdAt: string } | null } };
+export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'UserResponse', errors?: Array<{ __typename?: 'FieldError', field: string, message: string }> | null, user?: { __typename?: 'User', email: string, username: string, privateAccount: boolean, createdAt: string } | null } };
 
 export type LogoutMutationVariables = Exact<{ [key: string]: never; }>;
 
@@ -181,12 +182,12 @@ export type RegisterMutationVariables = Exact<{
 }>;
 
 
-export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'UserResponse', errors?: Array<{ __typename?: 'FieldError', field: string, message: string }> | null, user?: { __typename?: 'User', username: string, privateAccount: boolean, createdAt: string } | null } };
+export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'UserResponse', errors?: Array<{ __typename?: 'FieldError', field: string, message: string }> | null, user?: { __typename?: 'User', email: string, username: string, privateAccount: boolean, createdAt: string } | null } };
 
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'User', username: string, privateAccount: boolean, createdAt: string } | null };
+export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'User', email: string, username: string, privateAccount: boolean, createdAt: string } | null };
 
 export type ProfileQueryVariables = Exact<{
   username: Scalars['String']['input'];
@@ -228,6 +229,7 @@ export const ChangePrivacyDocument = gql`
     }
     user {
       ...RegularUser
+      email
     }
   }
 }
@@ -254,6 +256,7 @@ export const LoginDocument = gql`
     }
     user {
       ...RegularUser
+      email
     }
   }
 }
@@ -280,6 +283,7 @@ export const RegisterDocument = gql`
     }
     user {
       ...RegularUser
+      email
     }
   }
 }
@@ -292,6 +296,7 @@ export const MeDocument = gql`
     query Me {
   me {
     ...RegularUser
+    email
   }
 }
     ${RegularUserFragmentDoc}`;

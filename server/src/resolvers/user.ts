@@ -1,4 +1,3 @@
-import validatePassword from "../utils/validatePassword";
 import { User } from "../entities/User";
 import { MyContext } from "../types";
 import argon2 from "argon2";
@@ -14,6 +13,9 @@ import {
 } from "type-graphql";
 import { __prod__ } from "../constants";
 import LevenshteinDistance from "../utils/LevenshteinDistance";
+import { isValidEmail } from "../utils/isValidEmail";
+import { isValidPassword } from "../utils/isValidPassword";
+import { isValidUsername } from "../utils/isValidUsername";
 
 @InputType()
 class UsernamePasswordInput {
@@ -27,6 +29,8 @@ class UsernamePasswordInput {
 class UsernamePasswordRegisterInput {
   @Field()
   username: string;
+  @Field()
+  email: string;
   @Field()
   password: string;
   @Field()
@@ -169,11 +173,24 @@ export class UserResolver {
     return await User.findOne({ where: { id: req.session.userId } });
   }
 
+  // Todo: Add first & last name fields
   @Mutation(() => UserResponse)
   async register(
     @Arg("options") options: UsernamePasswordRegisterInput,
     @Ctx() { em, req }: MyContext
   ): Promise<UserResponse> {
+    const userExists = await User.findOne({ where: { email: options.email } });
+    if (userExists) {
+      return {
+        errors: [
+          {
+            field: "email",
+            message: "Email is already in use!",
+          },
+        ],
+      };
+    }
+
     if (options.username.length <= 2) {
       return {
         errors: [
@@ -185,8 +202,24 @@ export class UserResolver {
       };
     }
 
+    if (!isValidUsername(options.username).result) {
+      const errors = isValidUsername(options.username).errors;
+      return { errors };
+    }
+
+    if (!isValidEmail(options.email)) {
+      return {
+        errors: [
+          {
+            field: "email",
+            message: "Not a valid email.",
+          },
+        ],
+      };
+    }
+
     if (__prod__) {
-      const passwordErrors = validatePassword(options.password);
+      const passwordErrors = isValidPassword(options.password);
       if (passwordErrors) return passwordErrors;
     }
 
@@ -202,6 +235,7 @@ export class UserResolver {
         .into(User)
         .values({
           username: options.username,
+          email: options.email,
           password: hashedPassword,
           privateAccount: options.privateAccount,
         })

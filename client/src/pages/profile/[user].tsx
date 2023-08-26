@@ -173,7 +173,7 @@ const ProfilePage = () => {
                   )}
                 </Text>
               </Flex>
-              {/* //todo sessions */}
+              {/* //Todo: Sessions */}
               {/* <Flex gap={1} justifyContent={["space-between", "none", "none"]}>
                 <Text>Sessions Logged </Text>
                 <Text> {sessions?.length} </Text>

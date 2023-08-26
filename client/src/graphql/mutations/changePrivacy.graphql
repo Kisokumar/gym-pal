@@ -6,6 +6,7 @@ mutation ChangePrivacy($isPrivate: Boolean!) {
     }
     user {
       ...RegularUser
+      email
     }
   }
 }

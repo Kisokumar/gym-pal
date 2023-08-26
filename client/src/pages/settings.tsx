@@ -11,8 +11,10 @@ import React from "react";
 import Wrapper from "@src/components/Reusable/Wrapper";
 import { createUrqlClient } from "@src/utils/createUrqlClient";
 import unixToDate from "@src/utils/unixToDate";
+import { IoMdTime } from "react-icons/io";
 import { withUrqlClient } from "next-urql";
-import { CiSettings } from "react-icons/ci";
+import { CiMail, CiSettings } from "react-icons/ci";
+import { MdPrivacyTip } from "react-icons/md";
 
 function Settings() {
   const [{ data: userData, fetching }] = useMeQuery({
@@ -40,6 +42,7 @@ function Settings() {
 
   const username = userData?.me?.username;
   const createdAt = userData?.me?.createdAt;
+  const email = userData?.me?.email;
 
   const UseColorModeValue = useColorModeValue;
 
@@ -103,10 +106,23 @@ function Settings() {
               p={2}
             >
               <Flex gap={1} justifyContent={["space-between", "none", "none"]}>
-                <Text>Joined </Text>
+                <Text alignItems="center" display="flex" gap={1}>
+                  <IoMdTime /> Joined
+                </Text>
                 <Text>{unixToDate(Number(createdAt), "short")}</Text>
               </Flex>
-              <Flex>
+              <Flex
+                alignItems="center"
+                gap={1}
+                justifyContent={["space-between", "none", "none"]}
+              >
+                <Text alignItems="center" display="flex" gap={1}>
+                  <CiMail /> Mail
+                </Text>
+                <Text>{email}</Text>
+              </Flex>
+              <Flex alignItems="center" gap={1}>
+                <MdPrivacyTip />
                 <PrivateAccountSwitch pageProps={undefined} />
               </Flex>
             </Flex>
