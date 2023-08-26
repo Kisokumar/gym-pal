@@ -1,5 +1,5 @@
 query UserSearch($search: String!) {
-  users(search: $search) {
+  searchUsers(search: $search) {
     errors {
       field
       message

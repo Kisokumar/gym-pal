@@ -72,13 +72,21 @@ export type MutationUpdateWorkoutSessionArgs = {
   sessionType: Scalars['String']['input'];
 };
 
+export type ProfileResponse = {
+  __typename?: 'ProfileResponse';
+  errors?: Maybe<Array<FieldError>>;
+  owner?: Maybe<Scalars['Boolean']['output']>;
+  user?: Maybe<User>;
+};
+
 export type Query = {
   __typename?: 'Query';
   WorkoutSession?: Maybe<WorkoutSession>;
   WorkoutSessions: Array<WorkoutSession>;
   me?: Maybe<User>;
+  profile?: Maybe<ProfileResponse>;
+  searchUsers: UsersResponse;
   serverConnection: Scalars['String']['output'];
-  users: UsersResponse;
 };
 
 
@@ -87,7 +95,12 @@ export type QueryWorkoutSessionArgs = {
 };
 
 
-export type QueryUsersArgs = {
+export type QueryProfileArgs = {
+  username: Scalars['String']['input'];
+};
+
+
+export type QuerySearchUsersArgs = {
   search: Scalars['String']['input'];
 };
 
@@ -95,7 +108,7 @@ export type User = {
   __typename?: 'User';
   createdAt: Scalars['String']['output'];
   hideConnections: Scalars['Boolean']['output'];
-  id: Scalars['Float']['output'];
+  id: Scalars['String']['output'];
   privateAccount: Scalars['Boolean']['output'];
   updatedAt: Scalars['String']['output'];
   username: Scalars['String']['output'];
@@ -128,22 +141,23 @@ export type WorkoutSession = {
   __typename?: 'WorkoutSession';
   createdAt: Scalars['String']['output'];
   creator: User;
-  creatorId: Scalars['Float']['output'];
+  creatorId: Scalars['String']['output'];
   id: Scalars['Float']['output'];
+  points: Scalars['Float']['output'];
   sessionEndTime: Scalars['String']['output'];
   sessionStartTime: Scalars['String']['output'];
   sessionType: Scalars['String']['output'];
   updatedAt: Scalars['String']['output'];
 };
 
-export type RegularUserFragment = { __typename?: 'User', id: number, username: string, privateAccount: boolean };
+export type RegularUserFragment = { __typename?: 'User', username: string, privateAccount: boolean, createdAt: string };
 
 export type ChangePrivacyMutationVariables = Exact<{
   isPrivate: Scalars['Boolean']['input'];
 }>;
 
 
-export type ChangePrivacyMutation = { __typename?: 'Mutation', changePrivacy: { __typename?: 'UserResponse', errors?: Array<{ __typename?: 'FieldError', field: string, message: string }> | null, user?: { __typename?: 'User', id: number, username: string, privateAccount: boolean } | null } };
+export type ChangePrivacyMutation = { __typename?: 'Mutation', changePrivacy: { __typename?: 'UserResponse', errors?: Array<{ __typename?: 'FieldError', field: string, message: string }> | null, user?: { __typename?: 'User', username: string, privateAccount: boolean, createdAt: string } | null } };
 
 export type DeleteAccountMutationVariables = Exact<{ [key: string]: never; }>;
 
@@ -155,7 +169,7 @@ export type LoginMutationVariables = Exact<{
 }>;
 
 
-export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'UserResponse', errors?: Array<{ __typename?: 'FieldError', field: string, message: string }> | null, user?: { __typename?: 'User', id: number, username: string, privateAccount: boolean } | null } };
+export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'UserResponse', errors?: Array<{ __typename?: 'FieldError', field: string, message: string }> | null, user?: { __typename?: 'User', username: string, privateAccount: boolean, createdAt: string } | null } };
 
 export type LogoutMutationVariables = Exact<{ [key: string]: never; }>;
 
@@ -167,24 +181,26 @@ export type RegisterMutationVariables = Exact<{
 }>;
 
 
-export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'UserResponse', errors?: Array<{ __typename?: 'FieldError', field: string, message: string }> | null, user?: { __typename?: 'User', id: number, username: string, privateAccount: boolean } | null } };
+export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'UserResponse', errors?: Array<{ __typename?: 'FieldError', field: string, message: string }> | null, user?: { __typename?: 'User', username: string, privateAccount: boolean, createdAt: string } | null } };
 
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: number, username: string, privateAccount: boolean } | null };
+export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'User', username: string, privateAccount: boolean, createdAt: string } | null };
 
-export type ProfileQueryVariables = Exact<{ [key: string]: never; }>;
+export type ProfileQueryVariables = Exact<{
+  username: Scalars['String']['input'];
+}>;
 
 
-export type ProfileQuery = { __typename?: 'Query', me?: { __typename?: 'User', createdAt: string, id: number, username: string, privateAccount: boolean } | null };
+export type ProfileQuery = { __typename?: 'Query', profile?: { __typename?: 'ProfileResponse', owner?: boolean | null, errors?: Array<{ __typename?: 'FieldError', field: string, message: string }> | null, user?: { __typename?: 'User', username: string, privateAccount: boolean, hideConnections: boolean, createdAt: string, updatedAt: string } | null } | null };
 
 export type UserSearchQueryVariables = Exact<{
   search: Scalars['String']['input'];
 }>;
 
 
-export type UserSearchQuery = { __typename?: 'Query', users: { __typename?: 'UsersResponse', errors?: Array<{ __typename?: 'FieldError', field: string, message: string }> | null, users?: Array<{ __typename?: 'User', id: number, username: string, privateAccount: boolean }> | null } };
+export type UserSearchQuery = { __typename?: 'Query', searchUsers: { __typename?: 'UsersResponse', errors?: Array<{ __typename?: 'FieldError', field: string, message: string }> | null, users?: Array<{ __typename?: 'User', username: string, privateAccount: boolean, createdAt: string }> | null } };
 
 export type ServerConnectionQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -198,9 +214,9 @@ export type WorkoutSessionsQuery = { __typename?: 'Query', WorkoutSessions: Arra
 
 export const RegularUserFragmentDoc = gql`
     fragment RegularUser on User {
-  id
   username
   privateAccount
+  createdAt
 }
     `;
 export const ChangePrivacyDocument = gql`
@@ -284,20 +300,30 @@ export function useMeQuery(options?: Omit<Urql.UseQueryArgs<MeQueryVariables>, '
   return Urql.useQuery<MeQuery, MeQueryVariables>({ query: MeDocument, ...options });
 };
 export const ProfileDocument = gql`
-    query Profile {
-  me {
-    ...RegularUser
-    createdAt
+    query Profile($username: String!) {
+  profile(username: $username) {
+    owner
+    errors {
+      field
+      message
+    }
+    user {
+      username
+      privateAccount
+      hideConnections
+      createdAt
+      updatedAt
+    }
   }
 }
-    ${RegularUserFragmentDoc}`;
+    `;
 
-export function useProfileQuery(options?: Omit<Urql.UseQueryArgs<ProfileQueryVariables>, 'query'>) {
+export function useProfileQuery(options: Omit<Urql.UseQueryArgs<ProfileQueryVariables>, 'query'>) {
   return Urql.useQuery<ProfileQuery, ProfileQueryVariables>({ query: ProfileDocument, ...options });
 };
 export const UserSearchDocument = gql`
     query UserSearch($search: String!) {
-  users(search: $search) {
+  searchUsers(search: $search) {
     errors {
       field
       message

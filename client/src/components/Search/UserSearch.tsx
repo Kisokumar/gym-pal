@@ -26,6 +26,7 @@ import { Text } from "@chakra-ui/react";
 import { createUrqlClient } from "@src/utils/createUrqlClient";
 import { useUserSearchQuery } from "@src/generated/graphql";
 import { withUrqlClient } from "next-urql";
+import { useRouter } from "next/router";
 
 type UserSearchProps = {
   placeholder: string;
@@ -38,6 +39,7 @@ function UserSearch({ placeholder }: UserSearchProps): JSX.Element {
   const UseColorModeValue = useColorModeValue;
 
   const searchInputRef = useRef<HTMLInputElement | null>(null);
+  const router = useRouter();
 
   const [{ data: usersData, fetching: usersFetching }, reFetchUsers] =
     useUserSearchQuery({
@@ -56,7 +58,7 @@ function UserSearch({ placeholder }: UserSearchProps): JSX.Element {
     });
   };
 
-  const users = usersData?.users?.users;
+  const users = usersData?.searchUsers.users;
 
   return (
     <>
@@ -89,7 +91,7 @@ function UserSearch({ placeholder }: UserSearchProps): JSX.Element {
                 flexDir={"column"}
                 maxW={"2xl"}
                 w={"100%"}
-                zIndex={6}
+                zIndex={2}
               >
                 <Flex maxW={"2xl"} w={"100%"}>
                   <InputGroup maxW={"2xl"}>
@@ -113,12 +115,12 @@ function UserSearch({ placeholder }: UserSearchProps): JSX.Element {
                       onFocus={handleFocus}
                       onKeyDown={(e) => {
                         if (e.key === "Enter" && e.currentTarget.value !== "") {
-                          // handleSubmit(e);
+                          router.push(`/profile/${e.currentTarget.value}`);
                         }
                       }}
                       onSubmit={(e) => {
                         if (e.currentTarget.value !== "") {
-                          // handleSubmit(e);
+                          router.push(`/profile/${e.currentTarget.value}`);
                         }
                       }}
                     />
@@ -170,7 +172,7 @@ function UserSearch({ placeholder }: UserSearchProps): JSX.Element {
                 pos={"absolute"}
                 roundedBottom={"lg"}
                 w={"full"}
-                zIndex={5}
+                zIndex={1}
               >
                 <Box maxH={"lg"} overflowX={"hidden"} overflowY={"auto"}>
                   <List maxW={["2xl", "2xl", "2xl"]} mt={2}>
@@ -178,7 +180,10 @@ function UserSearch({ placeholder }: UserSearchProps): JSX.Element {
                     <Flex flexDirection={"column"} gap={2}>
                       {users && users?.length > 0 ? (
                         users.map((user) => (
-                          <Link href={`/user/account`} key={user.username}>
+                          <Link
+                            href={`/profile/${user.username}`}
+                            key={user.username}
+                          >
                             <Box
                               _hover={{
                                 bg: UseColorModeValue(
