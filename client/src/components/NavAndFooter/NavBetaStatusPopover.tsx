@@ -65,7 +65,7 @@ export const NavBetaStatusPopover = () => {
             </Link>
           </PopoverBody>
         </PopoverContent>
-      </Popover>{" "}
+      </Popover>
       {!fetchingServerConnection && (
         <StatusIcon
           pageProps={undefined}

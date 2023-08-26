@@ -24,7 +24,7 @@ export const NavWelcomeMessage = ({ meData, iconSize = 12 }: Props) => {
   const { colorMode } = useColorMode();
 
   return (
-    <Box alignItems="center" display={["none", "none", "flex"]}>
+    <Box alignItems="center" display={["none", "flex", "flex"]}>
       <Popover trigger="hover">
         <PopoverTrigger>
           <Box mx={2}>
@@ -44,7 +44,7 @@ export const NavWelcomeMessage = ({ meData, iconSize = 12 }: Props) => {
           <PopoverBody>
             <Flex gap={1}>
               <Text>Update it </Text>
-              <Link href="/profile">
+              <Link href={`/settings`}>
                 <Text color={colorMode === "light" ? "blue.600" : "blue.200"}>
                   here.
                 </Text>
@@ -53,7 +53,7 @@ export const NavWelcomeMessage = ({ meData, iconSize = 12 }: Props) => {
           </PopoverBody>
         </PopoverContent>
       </Popover>
-      <Link href="/profile">
+      <Link href={`/profile/${meData.me?.username}`}>
         <Text color="white" fontSize="xl" noOfLines={1}>
           Hey {meData?.me?.username}!
         </Text>

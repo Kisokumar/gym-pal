@@ -1,9 +1,5 @@
 import { Flex, Spinner, Text, useColorModeValue } from "@chakra-ui/react";
-import {
-  useProfileQuery,
-  useServerConnectionQuery,
-  useWorkoutSessionsQuery,
-} from "@src/generated/graphql";
+import { useMeQuery, useServerConnectionQuery } from "@src/generated/graphql";
 
 import CentrePageWrapper from "@src/components/Reusable/CentrePageWrapper";
 import DeleteAccountButton from "@src/components/ProfileSettings/DeleteAccountButton";
@@ -16,13 +12,13 @@ import Wrapper from "@src/components/Reusable/Wrapper";
 import { createUrqlClient } from "@src/utils/createUrqlClient";
 import unixToDate from "@src/utils/unixToDate";
 import { withUrqlClient } from "next-urql";
+import { CiSettings } from "react-icons/ci";
 
 function Settings() {
-  const [{ data: userData, fetching }] = useProfileQuery();
-  const [{ data: workoutSessionsData }] = useWorkoutSessionsQuery();
+  const [{ data: userData, fetching }] = useMeQuery({
+    requestPolicy: "network-only",
+  });
   const [{ error: serverError }] = useServerConnectionQuery();
-
-  const sessions = workoutSessionsData?.WorkoutSessions;
 
   if (serverError) {
     return <NotConnected pageProps={undefined} />;
@@ -50,7 +46,7 @@ function Settings() {
   return (
     <>
       <Head>
-        <title>Profile • Gympal</title>
+        <title>Settings • Gympal</title>
         <meta
           content="GymPal - Your Ultimate Fitness Tracking Companion. Achieve your fitness goals with GymPal, the all-in-one platform to track and visualize your gym progress. Connect with friends, view their profiles, and compare workout statistics."
           name="description"
@@ -59,6 +55,27 @@ function Settings() {
       <Flex justify="center">
         <Wrapper variant="regular">
           <Flex direction="column" gap={2} p={4}>
+            <Flex
+              alignItems="center"
+              border="solid"
+              borderColor={UseColorModeValue("gray.500", "gray.500")}
+              borderRadius={4}
+              borderWidth={1}
+              justifyContent="center"
+              p={2}
+            >
+              <Text
+                alignItems="center"
+                display="flex"
+                fontSize="xl"
+                fontWeight="hairline"
+                gap={1}
+                justifyContent="center"
+              >
+                <CiSettings size={28} />
+                Account Settings
+              </Text>
+            </Flex>
             <Flex
               alignItems="center"
               border="solid"
@@ -88,10 +105,6 @@ function Settings() {
               <Flex gap={1} justifyContent={["space-between", "none", "none"]}>
                 <Text>Joined </Text>
                 <Text>{unixToDate(Number(createdAt), "short")}</Text>
-              </Flex>
-              <Flex gap={1} justifyContent={["space-between", "none", "none"]}>
-                <Text>Sessions Logged </Text>
-                <Text> {sessions?.length} </Text>
               </Flex>
               <Flex>
                 <PrivateAccountSwitch pageProps={undefined} />

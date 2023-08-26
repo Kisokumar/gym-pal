@@ -1,4 +1,4 @@
-import { ChakraProvider, Flex } from "@chakra-ui/react";
+import { Box, ChakraProvider, Flex } from "@chakra-ui/react";
 
 import { AppProps } from "next/app";
 import Footer from "@src/components/NavAndFooter/Footer";
@@ -20,7 +20,9 @@ function MyApp({ Component, pageProps }: AppProps) {
       </Head>
       <Flex direction="column" h="100vh">
         <NavBar {...pageProps} />
-        <Component {...pageProps} />
+        <Box h={"full"} my={20} w={"full"}>
+          <Component {...pageProps} />
+        </Box>
         <Footer />
       </Flex>
     </ChakraProvider>

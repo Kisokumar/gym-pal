@@ -1,38 +1,21 @@
-import {
-  Box,
-  Button,
-  Flex,
-  IconButton,
-  Popover,
-  PopoverBody,
-  PopoverContent,
-  PopoverHeader,
-  PopoverTrigger,
-  useColorMode,
-} from "@chakra-ui/react";
-import React from "react";
-import { ImExit } from "react-icons/im";
-import { BiUser } from "react-icons/bi";
-import { AiOutlineHome } from "react-icons/ai";
-import { useLogoutMutation, useMeQuery } from "@src/generated/graphql";
-
-import { DarkModeSwitch } from "./DarkModeSwitch";
-import Link from "next/link";
-import { Text } from "@chakra-ui/react";
+import { Box, Button, Text, useColorMode } from "@chakra-ui/react";
+import { useMeQuery } from "@src/generated/graphql";
 import { createUrqlClient } from "@src/utils/createUrqlClient";
-import { CiSettings } from "react-icons/ci";
-import { useRouter } from "next/router";
 import { withUrqlClient } from "next-urql";
-import { ProfileModalButton } from "./ProfileModalButton";
-import { useDisclosure } from "@chakra-ui/react";
-import { CustomTooltip } from "./CustomTooltip";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import React from "react";
+import { AiOutlineHome } from "react-icons/ai";
+import NavUserSearch from "../Search/NavUserSearch";
+import { DarkModeSwitch } from "./DarkModeSwitch";
+import { NavWelcomeMessage } from "./NavWelcomeMessage";
+import ProfileModal from "./ProfileModal/ProfileModal";
+import { NavIcon } from "./NavIcon";
+import { SearchIcon } from "@chakra-ui/icons";
 
 function NavBar() {
   const { colorMode } = useColorMode();
   const router = useRouter();
-  const { isOpen, onOpen, onClose } = useDisclosure();
-
-  const [{ fetching: logoutFetching }, logout] = useLogoutMutation();
   const [{ data: meData, fetching }] = useMeQuery();
 
   const loginButton = (
@@ -84,9 +67,14 @@ function NavBar() {
     <Box
       alignItems="center"
       bg={colorMode === "light" ? "gray.600" : "gray.900"}
+      color={colorMode === "light" ? "gray.700" : "gray.200"}
+      // h={16}
       display="flex"
-      h={14}
       justifyContent="space-between"
+      p={2}
+      pos="fixed"
+      top="0"
+      w="100%"
     >
       <Box alignItems="center" display="flex" gap={2} ml={4}>
         <Link href="/">
@@ -95,7 +83,10 @@ function NavBar() {
           </Text>
         </Link>
         {/* // Todo Nav usersearch */}
-        {/* <NavUserSearch pageProps={undefined} placeholder="Search GymPal" /> */}
+
+        {router.pathname !== "/search" && !fetching && meData?.me && (
+          <NavUserSearch pageProps={undefined} />
+        )}
         {/* <NavBetaStatusPopover /> */}
       </Box>
       <Box alignItems="center" display="flex" gap={2} mr={4}>
@@ -105,76 +96,34 @@ function NavBar() {
               <>{navButtons}</>
             ) : (
               <Box alignItems="center" display="flex" gap={2}>
-                <CustomTooltip label="Home">
-                  <IconButton
-                    aria-label="Home"
-                    icon={<AiOutlineHome size={18} />}
-                    rounded="full"
-                    size="sm"
-                    onClick={() => {
-                      router.push("/");
+                <NavWelcomeMessage iconSize={20} meData={meData} />
+                <NavIcon
+                  icon={<AiOutlineHome size={20} />}
+                  label="Home"
+                  tooltipLabel="Home"
+                  onClickFn={() => {
+                    router.push("/");
+                  }}
+                />
+                <Box display={["flex", "none", "none"]}>
+                  <NavIcon
+                    icon={<SearchIcon />}
+                    label="Searc"
+                    tooltipLabel="Search"
+                    onClickFn={() => {
+                      router.push("/search");
                     }}
                   />
-                </CustomTooltip>
-                <Popover
-                  isOpen={isOpen}
-                  trigger="click"
-                  onClose={onClose}
-                  onOpen={onOpen}
-                >
-                  <PopoverTrigger>
-                    <Box>
-                      <CustomTooltip label="Account">
-                        <IconButton
-                          aria-label="Profile"
-                          icon={<BiUser size={18} />}
-                          rounded="full"
-                          size="sm"
-                          onClick={onOpen}
-                        />
-                      </CustomTooltip>
-                    </Box>
-                  </PopoverTrigger>
-                  <PopoverContent mr={4}>
-                    <PopoverHeader>
-                      <ProfileModalButton
-                        ariaLabel="See Account"
-                        label={
-                          <Flex alignItems="center" gap={2}>
-                            <BiUser size={18} />
-                            {meData?.me?.username}{" "}
-                          </Flex>
-                        }
-                        onClickFn={() => {
-                          router.push(`/profile/${meData.me?.username}`);
-                          onClose();
-                        }}
-                      />
-                    </PopoverHeader>
-                    <PopoverBody>
-                      <ProfileModalButton
-                        ariaLabel="Settings"
-                        icon={<CiSettings size={18} />}
-                        label="Settings"
-                        onClickFn={() => {
-                          router.push("/settings");
-                          onClose();
-                        }}
-                      />
-                      <ProfileModalButton
-                        ariaLabel="Log Out"
-                        icon={<ImExit size={18} />}
-                        label="Log Out"
-                        loading={logoutFetching}
-                        onClickFn={() => {
-                          logout({});
-                          router.push("/login");
-                          onClose();
-                        }}
-                      />
-                    </PopoverBody>
-                  </PopoverContent>
-                </Popover>
+                </Box>
+                {/* <NavIcon
+                  icon={<BsPeople size={20} />}
+                  label="Friends"
+                  tooltipLabel="Friends"
+                  onClickFn={() => {
+                    router.push("/friends");
+                  }}
+                /> */}
+                <ProfileModal />
               </Box>
             )}
           </>
