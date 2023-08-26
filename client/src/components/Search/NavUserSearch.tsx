@@ -63,13 +63,13 @@ function NavUserSearch({ height = "40px" }: Props): JSX.Element {
   return (
     <>
       <Flex
-        alignItems={"center"}
-        direction={"column"}
+        alignItems="center"
+        direction="column"
         display={["none", "flex", "flex"]}
-        justifyContent={"center"}
-        maxW={"lg"}
+        justifyContent="center"
+        maxW="lg"
         mx={2}
-        w={"full"}
+        w="full"
       >
         <Popover
           closeOnBlur={true}
@@ -101,7 +101,7 @@ function NavUserSearch({ height = "40px" }: Props): JSX.Element {
                   pl={8}
                   placeholder="Search"
                   ref={inputRef}
-                  rounded={"full"}
+                  rounded="full"
                   value={query}
                   onBlur={() => {
                     onClose();
@@ -144,7 +144,7 @@ function NavUserSearch({ height = "40px" }: Props): JSX.Element {
             // ml={[8, 16, 16]}
           >
             <PopoverBody pt={0} zIndex={10}>
-              <Flex flexDirection={"column"} gap={2} pb={2} pt={0} px={1}>
+              <Flex flexDirection="column" gap={2} pb={2} pt={0} px={1}>
                 {users && users?.length > 0 ? (
                   users.map((user) => (
                     <Link
@@ -153,19 +153,19 @@ function NavUserSearch({ height = "40px" }: Props): JSX.Element {
                     >
                       <Box
                         _hover={{ hoverColor }}
-                        alignItems={"center"}
+                        alignItems="center"
                         bg={boxBgColor}
-                        cursor={"pointer"}
+                        cursor="pointer"
                         p={4}
-                        rounded={"lg"}
-                        transition={"background 0.3s ease"}
+                        rounded="lg"
+                        transition="background 0.3s ease"
                       >
                         <Flex
                           alignItems="center"
-                          h={"100%"}
-                          justify={"space-between"}
+                          h="100%"
+                          justify="space-between"
                         >
-                          <Flex alignItems={"center"} flexDirection={"row"}>
+                          <Flex alignItems="center" flexDirection="row">
                             {user.privateAccount ? (
                               <Text alignItems="center" display="flex">
                                 <CiLock />

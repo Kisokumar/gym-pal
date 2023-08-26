@@ -20,7 +20,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       </Head>
       <Flex direction="column" h="100vh">
         <NavBar {...pageProps} />
-        <Box h={"full"} my={20} w={"full"}>
+        <Box h="full" my={20} w="full">
           <Component {...pageProps} />
         </Box>
         <Footer />

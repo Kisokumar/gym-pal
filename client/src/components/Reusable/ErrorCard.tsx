@@ -15,25 +15,25 @@ export default function ErrorCard(props: ErrorCardProps): JSX.Element {
   return (
     <Flex
       bg={UseColorModeValue("gray.200", "gray.900")}
-      boxShadow={"none"}
-      direction={"column"}
-      flexGrow={"1"}
+      boxShadow="none"
+      direction="column"
+      flexGrow="1"
       key={props.title}
       m={4}
-      maxH={"100%"}
+      maxH="100%"
       px={4}
       py={2}
-      rounded={"lg"}
-      w={"max"}
+      rounded="lg"
+      w="max"
       {...props}
     >
-      <Heading overflowWrap={"anywhere"} size={"md"}>
+      <Heading overflowWrap="anywhere" size="md">
         {props.title}
       </Heading>
       <Container
         bg={UseColorModeValue("red.400", "red.800")}
         key={props.message}
-        maxW={"100%"}
+        maxW="100%"
         mt={2}
         px={4}
         py={2}

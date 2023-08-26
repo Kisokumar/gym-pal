@@ -141,7 +141,7 @@ const ProfilePage = () => {
                     fontWeight="medium"
                     justifyContent="start"
                     size="sm"
-                    w={"full"}
+                    w="full"
                     onClick={() => {
                       router.push("/settings");
                     }}
@@ -161,7 +161,7 @@ const ProfilePage = () => {
               borderWidth={1}
               direction={["column", "column", "row"]}
               gap={["2", "2", "none"]}
-              justifyContent={"space-between"}
+              justifyContent="space-between"
               p={2}
             >
               <Flex

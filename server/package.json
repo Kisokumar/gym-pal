@@ -4,9 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "lint": "yarn tc && yarn elint",
-    "tc": "tsc",
-    "elint": "eslint .",
+    "lint": "yarn tsc",
     "test": "jest",
     "watch": "tsc -w",
     "dev": "nodemon dist/index.js",

@@ -63,38 +63,38 @@ function UserSearch({ placeholder }: UserSearchProps): JSX.Element {
   return (
     <>
       <Flex
-        alignItems={"center"}
-        direction={"column"}
-        justifyContent={"center"}
-        maxW={"2xl"}
-        w={"full"}
+        alignItems="center"
+        direction="column"
+        justifyContent="center"
+        maxW="2xl"
+        w="full"
       >
         <Flex
-          alignContent={"center"}
+          alignContent="center"
           direction={["column", "row", "row"]}
-          justifyContent={"center"}
-          maxW={"2xl"}
-          rounded={"lg"}
-          w={"full"}
+          justifyContent="center"
+          maxW="2xl"
+          rounded="lg"
+          w="full"
         >
-          <Box w={"full"}>
+          <Box w="full">
             <Flex
-              align={"center"}
-              display={"flex"}
-              justify={"center"}
-              maxW={"2xl"}
-              w={"full"}
+              align="center"
+              display="flex"
+              justify="center"
+              maxW="2xl"
+              w="full"
             >
               <Card
                 bg={UseColorModeValue("gray.200", "gray.900")}
-                boxShadow={"none"}
-                flexDir={"column"}
-                maxW={"2xl"}
-                w={"100%"}
+                boxShadow="none"
+                flexDir="column"
+                maxW="2xl"
+                w="100%"
                 zIndex={2}
               >
-                <Flex maxW={"2xl"} w={"100%"}>
-                  <InputGroup maxW={"2xl"}>
+                <Flex maxW="2xl" w="100%">
+                  <InputGroup maxW="2xl">
                     <InputLeftElement pl={4} pointerEvents="none">
                       <BsFillPersonCheckFill size={19} />
                     </InputLeftElement>
@@ -108,7 +108,7 @@ function UserSearch({ placeholder }: UserSearchProps): JSX.Element {
                       pl={12}
                       placeholder={placeholder || "Placeholder"}
                       ref={searchInputRef}
-                      rounded={"full"}
+                      rounded="full"
                       onChange={(e) => {
                         handleSearch(e.currentTarget.value);
                       }}
@@ -129,10 +129,10 @@ function UserSearch({ placeholder }: UserSearchProps): JSX.Element {
                         <IconButton
                           _hover={{ color: "#ebedf0" }}
                           aria-label="Clear Search"
-                          bg={"transparent"}
+                          bg="transparent"
                           icon={<CloseIcon />}
-                          rounded={"full"}
-                          size={"xs"}
+                          rounded="full"
+                          size="xs"
                           onClick={(e) => {
                             e.preventDefault();
                             setQuery("");
@@ -142,14 +142,14 @@ function UserSearch({ placeholder }: UserSearchProps): JSX.Element {
                       </InputRightElement>
                     )}
                   </InputGroup>
-                  <Flex align={"center"}>
+                  <Flex align="center">
                     <IconButton
                       aria-label="Search GymPal"
                       colorScheme="gray"
                       icon={<SearchIcon />}
                       isDisabled={query === ""}
                       ml={2}
-                      rounded={"full"}
+                      rounded="full"
                       onClick={() => {
                         if (query !== "") {
                           // handleSubmit(e);
@@ -166,18 +166,18 @@ function UserSearch({ placeholder }: UserSearchProps): JSX.Element {
                 bg={UseColorModeValue("gray.200", "gray.900")}
                 display={isFocused ? "block" : "none"}
                 left={0}
-                maxW={"2xl"}
+                maxW="2xl"
                 mt={-3}
                 p={4}
-                pos={"absolute"}
-                roundedBottom={"lg"}
-                w={"full"}
+                pos="absolute"
+                roundedBottom="lg"
+                w="full"
                 zIndex={1}
               >
-                <Box maxH={"lg"} overflowX={"hidden"} overflowY={"auto"}>
+                <Box maxH="lg" overflowX="hidden" overflowY="auto">
                   <List maxW={["2xl", "2xl", "2xl"]} mt={2}>
                     <Divider mb={3}></Divider>
-                    <Flex flexDirection={"column"} gap={2}>
+                    <Flex flexDirection="column" gap={2}>
                       {users && users?.length > 0 ? (
                         users.map((user) => (
                           <Link
@@ -191,25 +191,22 @@ function UserSearch({ placeholder }: UserSearchProps): JSX.Element {
                                   "whiteAlpha.200"
                                 ),
                               }}
-                              alignItems={"center"}
+                              alignItems="center"
                               bg={UseColorModeValue(
                                 "blackAlpha.100",
                                 "whiteAlpha.100"
                               )}
-                              cursor={"pointer"}
+                              cursor="pointer"
                               p={4}
-                              rounded={"lg"}
-                              transition={"background 0.3s ease"}
+                              rounded="lg"
+                              transition="background 0.3s ease"
                             >
                               <Flex
                                 alignItems="center"
-                                h={"100%"}
-                                justify={"space-between"}
+                                h="100%"
+                                justify="space-between"
                               >
-                                <Flex
-                                  alignItems={"center"}
-                                  flexDirection={"row"}
-                                >
+                                <Flex alignItems="center" flexDirection="row">
                                   {user.privateAccount ? (
                                     <Text alignItems="center" display="flex">
                                       <CiLock />
