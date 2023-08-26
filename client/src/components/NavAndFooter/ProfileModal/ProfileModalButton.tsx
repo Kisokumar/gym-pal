@@ -20,17 +20,18 @@ export const ProfileModalButton = ({
   return (
     <Button
       _hover={{
-        background: colorMode === "dark" ? "gray.800" : "gray.500",
-        color: "white",
+        background: colorMode === "dark" ? "whiteAlpha.100" : "gray.500",
       }}
       aria-label={ariaLabel}
       backgroundColor="transparent"
-      fontSize="sm"
+      color="white"
+      fontSize="md"
       fontWeight="medium"
       isLoading={loading || false}
       justifyContent="start"
-      size="sm"
-      w={"full"}
+      p={2}
+      size="md"
+      w="full"
       onClick={() => {
         if (onClickFn) {
           onClickFn();

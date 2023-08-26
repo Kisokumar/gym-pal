@@ -1,6 +1,16 @@
-query Profile {
-  me {
-    ...RegularUser
-    createdAt
+query Profile($username: String!) {
+  profile(username: $username) {
+    owner
+    errors {
+      field
+      message
+    }
+    user {
+      username
+      privateAccount
+      hideConnections
+      createdAt
+      updatedAt
+    }
   }
 }

@@ -1,8 +1,5 @@
 import { Flex, Switch, useToast } from "@chakra-ui/react";
-import {
-  useChangePrivacyMutation,
-  useProfileQuery,
-} from "@src/generated/graphql";
+import { useChangePrivacyMutation, useMeQuery } from "@src/generated/graphql";
 
 import { BsGlobeAmericas } from "react-icons/bs";
 import { CiLock } from "react-icons/ci";
@@ -10,20 +7,20 @@ import { Text } from "@chakra-ui/react";
 import { createUrqlClient } from "@src/utils/createUrqlClient";
 import { withUrqlClient } from "next-urql";
 
+export const renderPrivateIcon = (isPrivate: boolean) => (
+  <Text alignItems="center" display="flex">
+    {isPrivate ? <CiLock /> : <BsGlobeAmericas />}
+  </Text>
+);
+
 function PrivateAccountSwitch() {
   const toast = useToast();
-  const [{ data: userData, fetching: userFetching }] = useProfileQuery();
+  const [{ data: userData, fetching: userFetching }] = useMeQuery();
   const [{ fetching: changingPrivacy }, changePrivacy] =
     useChangePrivacyMutation();
 
   const privateAccount = userData?.me?.privateAccount;
   const disabledState = userFetching || changingPrivacy;
-
-  const renderPrivateIcon = (isPrivate: boolean) => (
-    <Text alignItems="center" display="flex">
-      {isPrivate ? <CiLock color="white" /> : <BsGlobeAmericas color="white" />}
-    </Text>
-  );
 
   const renderToastTitle = (accountStatus: string) => (
     <Text>Your account is now {accountStatus}.</Text>

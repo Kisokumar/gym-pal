@@ -7,6 +7,7 @@ import {
   LogoutMutation,
   MeDocument,
   MeQuery,
+  ProfileQuery,
   RegisterMutation,
 } from "@src/generated/graphql";
 
@@ -81,6 +82,16 @@ export const createUrqlClient = (ssrExchange: any) => ({
               },
               _result,
               () => ({ me: null })
+            );
+          },
+          logoutProfile: (_result, _args, cache, _info) => {
+            betterUpdateQuery<LogoutMutation, ProfileQuery>(
+              cache,
+              {
+                query: MeDocument,
+              },
+              _result,
+              () => ({ profile: null })
             );
           },
           register: (_result, _args, cache, _info) => {

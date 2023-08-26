@@ -114,8 +114,18 @@ function DeleteAccountButton() {
               }}
             >
               Confirm Deletion
-            </Button>{" "}
-            <Button onClick={onClose}>Cancel</Button>
+            </Button>
+            <Button
+              _hover={{
+                bg: "green.300",
+                color: "black",
+              }}
+              bg="green.500"
+              color="white"
+              onClick={onClose}
+            >
+              Cancel
+            </Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
