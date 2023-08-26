@@ -1,4 +1,4 @@
-export default function validatePassword(password: string) {
+export function isValidPassword(password: string) {
   if (password.length < 6) {
     return {
       errors: [
