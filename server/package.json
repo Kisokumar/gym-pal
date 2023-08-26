@@ -4,6 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "lint": "yarn tc && yarn elint",
+    "tc": "tsc",
+    "elint": "eslint .",
     "test": "jest",
     "watch": "tsc -w",
     "dev": "nodemon dist/index.js",
@@ -40,7 +43,6 @@
     "redis": "^4.6.7",
     "reflect-metadata": "^0.1.13",
     "type-graphql": "^1.1.1",
-    "typeorm": "^0.3.17",
-    "uuid": "^9.0.0"
+    "typeorm": "^0.3.17"
   }
 }
