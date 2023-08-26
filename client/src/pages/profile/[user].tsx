@@ -159,12 +159,15 @@ const ProfilePage = () => {
               borderColor={borderColor}
               borderRadius={4}
               borderWidth={1}
-              direction={["column", "row", "row"]}
-              gap={["2", "none", "none"]}
+              direction={["column", "column", "row"]}
+              gap={["2", "2", "none"]}
               justifyContent={"space-between"}
               p={2}
             >
-              <Flex gap={1} justifyContent={["space-between", "none", "none"]}>
+              <Flex
+                gap={1}
+                justifyContent={["space-between", "space-between", "none"]}
+              >
                 <Text>Joined </Text>
                 <Text>
                   {unixToDate(
@@ -182,7 +185,7 @@ const ProfilePage = () => {
                 <Flex
                   alignItems="center"
                   gap={2}
-                  justifyContent={["space-between", "none", "none"]}
+                  justifyContent={["space-between", "space-between", "none"]}
                   w="100%"
                 >
                   <Flex>

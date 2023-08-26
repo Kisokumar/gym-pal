@@ -100,12 +100,15 @@ function Settings() {
               borderColor={UseColorModeValue("gray.500", "gray.500")}
               borderRadius={4}
               borderWidth={1}
-              direction={["column", "row", "row"]}
-              gap={["2", "none", "none"]}
+              direction={["column", "column", "row"]}
+              gap={["2", "2", "none"]}
               justifyContent={"space-between"}
               p={2}
             >
-              <Flex gap={1} justifyContent={["space-between", "none", "none"]}>
+              <Flex
+                gap={1}
+                justifyContent={["space-between", "space-between", "none"]}
+              >
                 <Text alignItems="center" display="flex" gap={1}>
                   <IoMdTime /> Joined
                 </Text>
@@ -114,7 +117,7 @@ function Settings() {
               <Flex
                 alignItems="center"
                 gap={1}
-                justifyContent={["space-between", "none", "none"]}
+                justifyContent={["space-between", "space-between", "none"]}
               >
                 <Text alignItems="center" display="flex" gap={1}>
                   <CiMail /> Mail
