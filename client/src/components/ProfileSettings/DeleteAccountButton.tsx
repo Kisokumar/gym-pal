@@ -110,7 +110,7 @@ function DeleteAccountButton() {
               maxW={80}
               mr={3}
               onClick={async () => {
-                handleDelete();
+                await handleDelete();
               }}
             >
               Confirm Deletion
