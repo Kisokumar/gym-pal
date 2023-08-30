@@ -13,6 +13,7 @@ describe("isValidPassword", () => {
   it("should return false for invalid passwords", () => {
     expect(isValidPassword("badPassword").errors).not.toBeNull();
     expect(isValidPassword("short!").errors).not.toBeNull();
+    expect(isValidPassword("shrt").errors).not.toBeNull();
     expect(isValidPassword("noSpecialChars123").errors).not.toBeNull();
     expect(isValidPassword("OnlyLettersNoDigits!").errors).not.toBeNull();
     expect(isValidPassword("OnlyDigits12345").errors).not.toBeNull();

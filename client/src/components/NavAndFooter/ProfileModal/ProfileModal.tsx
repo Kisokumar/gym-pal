@@ -79,9 +79,9 @@ export default function ProfileModal() {
             label="Log Out"
             loading={logoutFetching}
             onClickFn={async () => {
-              onClose();
+              await logout({});
               await router.push("/login");
-              logout({});
+              onClose();
             }}
           />
         </PopoverBody>
