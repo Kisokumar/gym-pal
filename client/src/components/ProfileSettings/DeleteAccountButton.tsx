@@ -27,6 +27,7 @@ function DeleteAccountButton() {
 
   const handleDelete = async () => {
     try {
+      router.push("/signup");
       const deleteResult = await deleteAccount({});
 
       if (deleteResult.data?.deleteAccount) {
@@ -68,7 +69,6 @@ function DeleteAccountButton() {
       });
     }
     onClose();
-    router.push("/signup");
   };
 
   return (

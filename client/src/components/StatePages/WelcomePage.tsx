@@ -23,8 +23,8 @@ function Login() {
                 <Button
                   flex={1}
                   type="submit"
-                  onClick={() => {
-                    router.push("/signup");
+                  onClick={async () => {
+                    await router.push("/signup");
                   }}
                 >
                   Sign Up
@@ -32,8 +32,8 @@ function Login() {
                 <Button
                   flex={1}
                   type="submit"
-                  onClick={() => {
-                    router.push("/login");
+                  onClick={async () => {
+                    await router.push("/login");
                   }}
                 >
                   Log In

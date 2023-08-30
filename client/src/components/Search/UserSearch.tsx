@@ -113,14 +113,18 @@ function UserSearch({ placeholder }: UserSearchProps): JSX.Element {
                         handleSearch(e.currentTarget.value);
                       }}
                       onFocus={handleFocus}
-                      onKeyDown={(e) => {
+                      onKeyDown={async (e) => {
                         if (e.key === "Enter" && e.currentTarget.value !== "") {
-                          router.push(`/profile/${e.currentTarget.value}`);
+                          await router.push(
+                            `/profile/${e.currentTarget.value}`
+                          );
                         }
                       }}
-                      onSubmit={(e) => {
+                      onSubmit={async (e) => {
                         if (e.currentTarget.value !== "") {
-                          router.push(`/profile/${e.currentTarget.value}`);
+                          await router.push(
+                            `/profile/${e.currentTarget.value}`
+                          );
                         }
                       }}
                     />

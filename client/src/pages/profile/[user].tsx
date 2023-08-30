@@ -142,8 +142,8 @@ const ProfilePage = () => {
                     justifyContent="start"
                     size="sm"
                     w="full"
-                    onClick={() => {
-                      router.push("/settings");
+                    onClick={async () => {
+                      await router.push("/settings");
                     }}
                   >
                     <Flex gap={2} my={2}>

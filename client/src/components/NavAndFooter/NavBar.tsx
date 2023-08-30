@@ -24,8 +24,8 @@ function NavBar() {
       fontSize="sm"
       size="sm"
       type="submit"
-      onClick={() => {
-        router.push("/login");
+      onClick={async () => {
+        await router.push("/login");
       }}
     >
       Log In
@@ -37,8 +37,8 @@ function NavBar() {
       flex={1}
       fontSize="sm"
       size="sm"
-      onClick={() => {
-        router.push("/signup");
+      onClick={async () => {
+        await router.push("/signup");
       }}
     >
       Sign Up
@@ -99,8 +99,8 @@ function NavBar() {
                   icon={<AiOutlineHome size={20} />}
                   label="Home"
                   tooltipLabel="Home"
-                  onClickFn={() => {
-                    router.push("/");
+                  onClickFn={async () => {
+                    await router.push("/");
                   }}
                 />
                 <Box display={["flex", "none", "none"]}>
@@ -108,8 +108,8 @@ function NavBar() {
                     icon={<SearchIcon />}
                     label="Searc"
                     tooltipLabel="Search"
-                    onClickFn={() => {
-                      router.push("/search");
+                    onClickFn={async () => {
+                      await router.push("/search");
                     }}
                   />
                 </Box>
@@ -117,8 +117,8 @@ function NavBar() {
                   icon={<BsPeople size={20} />}
                   label="Friends"
                   tooltipLabel="Friends"
-                  onClickFn={() => {
-                    router.push("/friends");
+                  onClickFn={async () => {
+                    await router.push("/friends");
                   }}
                 /> */}
                 <ProfileModal />

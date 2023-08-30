@@ -57,8 +57,8 @@ export default function ProfileModal() {
                 {meData?.me?.username}
               </Flex>
             }
-            onClickFn={() => {
-              router.push(`/profile/${meData?.me?.username}`);
+            onClickFn={async () => {
+              await router.push(`/profile/${meData?.me?.username}`);
               onClose();
             }}
           />
@@ -67,8 +67,8 @@ export default function ProfileModal() {
             ariaLabel="Settings"
             icon={<CiSettings size={22} />}
             label="Settings"
-            onClickFn={() => {
-              router.push("/settings");
+            onClickFn={async () => {
+              await router.push("/settings");
               onClose();
             }}
           />

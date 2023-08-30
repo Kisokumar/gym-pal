@@ -34,8 +34,8 @@ const Custom404Page = () => {
                 <Button
                   flex={1}
                   type="submit"
-                  onClick={() => {
-                    router.push("/");
+                  onClick={async () => {
+                    await router.push("/");
                   }}
                 >
                   Go to home page

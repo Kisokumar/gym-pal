@@ -55,7 +55,7 @@ function SignUp() {
               if (errors) {
                 setErrors(toErrorMap(errors));
               } else if (user) {
-                router.push("/");
+                await router.push("/");
               }
             }}
           >

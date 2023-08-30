@@ -44,8 +44,8 @@ function LoggedOutPage() {
                   <Button
                     flex={1}
                     type="submit"
-                    onClick={() => {
-                      router.push("/login");
+                    onClick={async () => {
+                      await router.push("/login");
                     }}
                   >
                     Log In
