@@ -1,8 +1,11 @@
 <h1 align="center">Welcome to GymPal! 📈</h1> 
 <p align="center">Full stack social media project for the gym!
    <br />
+   <!--
     <a href="https://www.gympal.kisho.uk/" target="_blank">Visit</a>
-    .
+ .   
+   -->
+     
     <a href="https://github.com/Kisokumar/gym-pal/issues">Report Bug</a>
     ·
     <a href="https://github.com/Kisokumar/gym-pal/issues">Request Feature</a>
