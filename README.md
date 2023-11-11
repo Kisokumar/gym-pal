@@ -1,4 +1,4 @@
-<h1 align="center">Welcome to <a href="https://www.gympal.kisho.uk/">GymPal</a>! 📈</h1> 
+<h1 align="center">Welcome to GymPal! 📈</h1> 
 <p align="center">Full stack social media project for the gym!
    <br />
     <a href="https://www.gympal.kisho.uk/" target="_blank">Visit</a>
