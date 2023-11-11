@@ -3,9 +3,9 @@
    <br />
    <!--
     <a href="https://www.gympal.kisho.uk/" target="_blank">Visit</a>
- .   
+ 
    -->
-     
+      .  
     <a href="https://github.com/Kisokumar/gym-pal/issues">Report Bug</a>
     ·
     <a href="https://github.com/Kisokumar/gym-pal/issues">Request Feature</a>
